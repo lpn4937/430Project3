@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>SongMaker</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  {{!-- <link rel="stylesheet" type="text/css" href="/assets/style.css"/> --}}
+  <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css"/>
+</head>
+<body>
+  <nav class="navbar bg-success"><a href="/login"></a>
+    <div class="navlink text-dark"><a href="/logout">Log out</a></div>
+  </nav>
+  <section id="makeSong">
+    <form id="songForm" name="songForm" action="/maker" method="POST" class="songForm">
+      <label for="name">Name: </label>
+      <input id="songName" type="text" name="name" placeholder="Song Name"/>
+      <label for="artist">Artist: </label>
+      <input id="songArtist" type="text" name="artist" placeholder="Song Artist"/>
+      <label for="album">Album: </label>
+      <input id="songAlbum" type="text" name="album" placeholder="Song Album"/>
+      <input type="hidden" name="_csrf" value={{csrfToken}} />
+      <input class="makeSongSubmit" type="submit" value="Make Song" />
+    </form>
+  </section>
+  <section id="songs">
+    <div class="row top-buffer">
+      {{#if songs}}
+        {{#each songs}}
+          <div class="col-sm-3">
+            <div class="card"><img src="/assets/img/domoface.jpeg" alt="card image cap" class="card-img-top"/>
+              <h3 class="songName">Name: {{this.name}}</h3>
+              <h3 class="songArtist">artist: {{this.artist}}</h3>
+              <h3 class="songAlbum">album: {{this.album}}</h3>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="emptySong">No Songs yet</h3>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </section>
+  {{!-- <div id="songMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
+    <h3><span id="errorMessage"></span></h3><img id="song" src="assets/img/domo.png" alt="song"/>
+  </div> --}}
+  <script src="/assets/bundle.js"></script>
+</body>
+</html>
