@@ -10,6 +10,10 @@ const signupPage = (req, res) => {
   res.render('signup', { csrfToken: req.csrfToken() });
 };
 
+const changePasswordPage = (req, res) => {
+  res.render('changePassword', { csrfToken: req.csrfToken() });
+};
+
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
@@ -79,8 +83,52 @@ const signup = (request, response) => {
   });
 };
 
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+
+  // cast to strings to cover up some security flaws
+  req.body.currentPass = `${req.body.currentPass}`;
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
+
+  if (!req.body.currentPass || !req.body.pass || !req.body.pass2) {
+    return (res.status(400).json({ error: 'RAWR! All fields are required' }));
+  }
+  if (req.body.pass !== req.body.pass2) {
+    return (res.status(400).json({ error: 'RAWR! Passwords do not match' }));
+  }
+
+  return Account.AccountModel.authenticate(req.session.account.username, req.body.currentPass, (err, account) => {
+    if (err || !account) {
+      return res.status(401).json({ error: 'Incorrect password' });
+    }
+
+    const newAccount = account;
+
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+      newAccount.password = hash;
+      newAccount.salt = salt;
+
+      const savePromise = newAccount.save();
+
+      savePromise.then(() => res.json({
+        password: newAccount.password,
+      }));
+
+      savePromise.catch((saveErr) => {
+        res.json(saveErr);
+      });
+
+      return res.json({ redirect: '/maker' });
+    });
+  });
+};
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signupPage = signupPage;
 module.exports.signup = signup;
+module.exports.changePassword = changePassword;
+module.exports.changePasswordPage = changePasswordPage;
