@@ -29,10 +29,18 @@
       {{#if songs}}
         {{#each songs}}
           <div class="col-sm-3">
-            <div class="card"><img src="/assets/img/domoface.jpeg" alt="card image cap" class="card-img-top"/>
+            <div class="card"><img src="{{this.art}}" alt="card image cap" class="card-img-top"/>
               <h3 class="songName">Name: {{this.name}}</h3>
               <h3 class="songArtist">artist: {{this.artist}}</h3>
               <h3 class="songAlbum">album: {{this.album}}</h3>
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h3>{{this.preview}}</h3>
+              <audio controls>
+                <source src="{{this.preview}}" type="audio/x-m4a">
+                Your browser does not support the audio element.
+              </audio>
             </div>
           </div>
         {{/each}}

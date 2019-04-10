@@ -6,8 +6,6 @@ let SongModel = {};
 
 const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
-const setArtist = (artist) => _.escape(artist).trim();
-const setAlbum = (album) => _.escape(album).trim();
 
 const SongSchema = new mongoose.Schema({
   name: {
@@ -21,14 +19,24 @@ const SongSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    set: setArtist,
   },
 
   album: {
     type: String,
     required: true,
     trim: true,
-    set:setAlbum,
+  },
+
+  art: {
+    type: String,
+    required: false,
+    trim:true,
+  },
+
+  preview: {
+    type: String,
+    required: false,
+    trim:true, 
   },
 
   owner: {
@@ -54,7 +62,7 @@ SongSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return SongModel.find(search).select('name age').exec(callback);
+  return SongModel.find(search).select('name artist album art').exec(callback);
 };
 
 SongModel = mongoose.model('Song', SongSchema);

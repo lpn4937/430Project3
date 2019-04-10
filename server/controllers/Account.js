@@ -82,6 +82,14 @@ const signup = (request, response) => {
     });
   });
 };
+const deleteAccount = (request, response) => {
+  Account.AccountModel.remove({username: request.session.account.username}, (err) => {
+    if(err) console.log(err);
+  });
+
+  request.session.destroy();
+  response.redirect('/');
+};
 
 const changePassword = (request, response) => {
   const req = request;
@@ -132,3 +140,4 @@ module.exports.signupPage = signupPage;
 module.exports.signup = signup;
 module.exports.changePassword = changePassword;
 module.exports.changePasswordPage = changePasswordPage;
+module.exports.deleteAccount = deleteAccount;
