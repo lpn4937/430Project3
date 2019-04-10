@@ -2,7 +2,27 @@
     position: absolute;
     left: 10px;
 }
-
+audio{
+    width: 100%;
+    background-color: #F1F3F4;
+}
+.nav-item{
+    font-size: 1.5em;
+}
+#searchTunesForm{
+    margin-top: .75em;
+}
+.nav-item{
+    margin-right: 10px;
+}
+.formFormat{
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 30px;
+}
+body{
+    background-color: rgb(235, 235, 235) !important;
+}
 /* html, body {
     height: 100%;
     width: 100%;

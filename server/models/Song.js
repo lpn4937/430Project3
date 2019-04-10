@@ -17,13 +17,13 @@ const SongSchema = new mongoose.Schema({
 
   artist: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
 
   album: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
 
@@ -62,7 +62,7 @@ SongSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return SongModel.find(search).select('name artist album art').exec(callback);
+  return SongModel.find(search).select('name artist album art preview').exec(callback);
 };
 
 SongModel = mongoose.model('Song', SongSchema);

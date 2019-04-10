@@ -21,33 +21,24 @@
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
   </nav>
-  <section id="songs">
-    <div class="row top-buffer m-3">
-      {{#if songs}}
-        {{#each songs}}
-          <div class="col-lg-2">
-            <div class="card"><img src="{{this.art}}" alt="card image cap" class="card-img-top"/>
-              <audio class="media" controls>
-                <source src="{{this.preview}}" type="audio/x-m4a">
-                Your browser does not support the audio element.
-              </audio>
-              <h5 class="songName">Name: {{this.name}}</h5>
-              <h5 class="songArtist">Artist: {{this.artist}}</h5>
-              <h5 class="songAlbum">Album: {{this.album}}</h5>
-              <form class="close" action="/deleteSong">
-                <input type="submit" value="{{this.name}}" />
-              </form>
-            </div>
-          </div>
-        {{/each}}
-      {{else}}
-        <div class="row">
-          <div class="col-lg-12">
-            <h3 class="emptySong">No Songs yet</h3>
-          </div>
-        </div>
-      {{/if}}
+  <section class="formFormat">
+    <h2>Add a song</h2>
+    <form id="songForm" name="songForm" action="/maker" method="POST" class="pageForm">
+    <div class="form-group">
+      <label for="name">Name: </label>
+      <input class="form-control" id="songName" type="text" name="name" placeholder="Song Name"/>
     </div>
+    <div class="form-group">
+      <label for="artist">Artist: </label>
+      <input class="form-control" id="songArtist" type="text" name="artist" placeholder="Song Artist"/>
+    </div>
+    <div class="form-group">
+      <label for="album">Album: </label>
+      <input class="form-control" id="songAlbum" type="text" name="album" placeholder="Song Album"/>
+    </div>
+      <input type="hidden" name="_csrf" value={{csrfToken}} />
+      <input class="btn btn-primary" type="submit" value="Make Song" />
+    </form>
   </section>
   {{!-- <div id="songMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
     <h3><span id="errorMessage"></span></h3><img id="song" src="assets/img/domo.png" alt="song"/>

@@ -14,6 +14,17 @@ const makerPage = (req, res) => {
   });
 };
 
+const addNewPage = (req, res) => {
+  Song.SongModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+
+    return res.render('addNew', { csrfToken: req.csrfToken(), songs: docs });
+  });
+};
+
 const makeSong = (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ error: 'Song name is required' });
@@ -23,21 +34,29 @@ const makeSong = (req, res) => {
 
   getTunes(url).then(result => {
     result = JSON.parse(result).results[0];
-    console.log(result);
+    
+    let songData;
+    if(result){
+      let artist = req.body.artist? req.body.artist : result.artistName;
+      let album = req.body.album? req.body.album : result.collectionName;
 
-    let artist = req.body.artist? req.body.artist : result.artistName;
-    let album = req.body.album? req.body.album : result.collectionName;
-
-
-    const songData = {
-      name: req.body.name,
-      artist: artist,
-      album: album,
-      preview: result.previewUrl,
-      art: result.artworkUrl100,
-      owner: req.session.account._id,
-    };
-    console.log(songData.preview);
+      songData = {
+        name: req.body.name,
+        artist: artist,
+        album: album,
+        preview: result.previewUrl,
+        art: result.artworkUrl100,
+        owner: req.session.account._id,
+      };
+    }else{
+      songData = {
+        name: req.body.name,
+        artist: req.body.artist,
+        album: req.body.album,
+        art: 'assets/img/domoface.jpeg',
+        owner: req.session.account._id,
+      };
+    }
   
     const newSong = new Song.SongModel(songData);
   
@@ -74,3 +93,4 @@ const getTunes = (url) => {
 
 module.exports.makerPage = makerPage;
 module.exports.make = makeSong;
+module.exports.addNewPage = addNewPage;

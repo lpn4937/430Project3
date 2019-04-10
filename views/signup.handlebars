@@ -8,25 +8,34 @@
   <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css"/>
 </head>
 <body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/login">Login</a></div>
-    <div class="navlink"><a href="/signup">Sign up</a></div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary"><a href="/login"></a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="text-light nav-link active" href="/login">Log in</a></li>
+      <li class="nav-item"><a class="text-light nav-link active" href="/signup">Sign up</a></li>
+    </ul>
+    <form onsubmit="event.preventDefault();" id="searchTunesForm" action="/searchTunes" class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search iTunes" aria-label="Search" id="urlField" />
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </nav>
-  <section id="signup">
+  <section class="formFormat">
     <form id="signupForm" name="signupForm" action="/signup" method="POST" class="mainForm">
-      <label for="username">Username: </label>
-      <input id="user" type="text" name="username" placeholder="username"/>
-      <label for="pass">Password: </label>
-      <input id="pass" type="password" name="pass" placeholder="password"/>
-      <label for="pass2">Password: </label>
-      <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
+      <div class="form-group">
+        <label for="username">Username: </label>
+        <input class="form-control" id="user" type="text" name="username" placeholder="Username"/>
+      </div>
+      <div class="form-group">
+        <label for="pass">Password: </label>
+        <input class="form-control" id="pass" type="password" name="pass" placeholder="Password"/>
+      </div>
+      <div class="form-group">
+        <label for="pass2">Password: </label>
+        <input class="form-control" id="pass2" type="password" name="pass2" placeholder="Retype Password"/>
+      </div>
       <input type="hidden" name="_csrf" value={{csrfToken}} />
-      <input class="formSubmit" type="submit" value="Sign Up" />
+      <input class="formSubmit btn btn-primary" type="submit" value="Sign Up" />
     </form>
   </section>
-  <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
-  </div>
   <script src="/assets/bundle.js"></script>
 </body>
 </html>
