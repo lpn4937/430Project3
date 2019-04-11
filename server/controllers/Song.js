@@ -98,7 +98,24 @@ const getTunes = (url) => {
   });
 };
 
+const search = (req, res) => {
+  res.render('app', { csrfToken: req.csrfToken(), songs: docs });
+  const content = document.querySelector('#content');
+
+  console.log(req);
+  let url = `https://itunes.apple.com/search?term=${req.body.name}&limit=20`;
+
+  getTunes(url).then(result => {
+    result = JSON.parse(result).results[0];
+    
+
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
 module.exports.makerPage = makerPage;
 module.exports.make = makeSong;
 module.exports.addNewPage = addNewPage;
 module.exports.deleteSong = deleteSong;
+module.exports.search = search;
