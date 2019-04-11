@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>DomoMaker</title>
+  <title>SongMaker</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   {{!-- <link rel="stylesheet" type="text/css" href="/assets/style.css"/> --}}
@@ -34,6 +34,7 @@
       </div>
       <input type="hidden" name="_csrf" value={{csrfToken}} />
       <input class="formSubmit btn btn-primary" type="submit" value="Sign Up" />
+      <div id="errorMessage"></div>
     </form>
   </section>
   <script src="/assets/bundle.js"></script>

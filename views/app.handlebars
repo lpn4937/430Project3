@@ -31,11 +31,16 @@
                 <source src="{{this.preview}}" type="audio/x-m4a">
                 Your browser does not support the audio element.
               </audio>
-              <h5 class="songName">Name: {{this.name}}</h5>
-              <h5 class="songArtist">Artist: {{this.artist}}</h5>
-              <h5 class="songAlbum">Album: {{this.album}}</h5>
-              <form class="close" action="/deleteSong">
-                <input type="submit" value="{{this.name}}" />
+              <div class="card-body">
+                <h5 class="songName">Name: {{this.name}}</h5>
+                <h5 class="songArtist">Artist: {{this.artist}}</h5>
+                <h5 class="songAlbum">Album: {{this.album}}</h5>
+              </div>
+              
+              <form class="close" action="/deleteSong" name="{{this.name}}">
+                <button type="submit" class="close" aria-label="Close" name="name" value="{{this.name}}">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </form>
             </div>
           </div>

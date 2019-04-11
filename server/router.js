@@ -10,6 +10,7 @@ const router = (app) => {
   app.get('/changePassword', mid.requiresLogin, controllers.Account.changePasswordPage);
   app.post('/changePassword', mid.requiresLogin, controllers.Account.changePassword);
   app.get('/deleteAccount', mid.requiresLogin, controllers.Account.deleteAccount);
+  app.get('/deleteSong', mid.requiresLogin, controllers.Song.deleteSong);
   app.get('/maker', mid.requiresLogin, controllers.Song.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Song.make);
   app.get('/addNew', mid.requiresLogin, controllers.Song.addNewPage);

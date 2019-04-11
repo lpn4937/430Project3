@@ -1,6 +1,6 @@
 .close{
     position: absolute;
-    left: 10px;
+    left: 5%;
 }
 audio{
     width: 100%;
@@ -22,6 +22,9 @@ audio{
 }
 body{
     background-color: rgb(235, 235, 235) !important;
+}
+#errorMessage{
+    color: red;
 }
 /* html, body {
     height: 100%;

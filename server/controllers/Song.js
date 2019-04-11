@@ -25,6 +25,13 @@ const addNewPage = (req, res) => {
   });
 };
 
+const deleteSong = (request, response) => {
+  Song.SongModel.remove({name: request.query.name}, (err) => {
+    if(err) console.log(err);
+  });
+  response.redirect('/');
+};
+
 const makeSong = (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ error: 'Song name is required' });
@@ -94,3 +101,4 @@ const getTunes = (url) => {
 module.exports.makerPage = makerPage;
 module.exports.make = makeSong;
 module.exports.addNewPage = addNewPage;
+module.exports.deleteSong = deleteSong;
