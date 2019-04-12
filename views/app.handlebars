@@ -16,8 +16,8 @@
       <li class="nav-item"><a class="text-light nav-link active" href="/addNew">Add New Song</a></li>
       <li class="nav-item"><a class="text-light nav-link active" href="/">View Songs</a></li>
     </ul>
-    <form onsubmit="event.preventDefault();" id="searchTunesForm" action="/searchTunes" class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search iTunes" aria-label="Search" id="urlField" />
+    <form id="searchTunesForm" action="/searchTunes" method="GET" class="form-inline">
+      <input class="form-control mr-sm-2" name="searchBar" type="search" placeholder="Search iTunes" aria-label="Search" id="urlField" />
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
   </nav>
@@ -32,11 +32,10 @@
                 Your browser does not support the audio element.
               </audio>
               <div class="card-body">
-                <h5 class="songName">Name: {{this.name}}</h5>
-                <h5 class="songArtist">Artist: {{this.artist}}</h5>
-                <h5 class="songAlbum">Album: {{this.album}}</h5>
+                <h5 class="songName">Name: </h5><p>{{this.name}}</p>
+                <h5 class="songArtist">Artist: </h5><p>{{this.artist}}</p>
+                <h5 class="songAlbum">Album: </h5><p>{{this.album}}</p>
               </div>
-              
               <form class="close" action="/deleteSong" name="{{this.name}}">
                 <button type="submit" class="close" aria-label="Close" name="name" value="{{this.name}}">
                   <span aria-hidden="true">&times;</span>

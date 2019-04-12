@@ -30,13 +30,13 @@ const SongSchema = new mongoose.Schema({
   art: {
     type: String,
     required: false,
-    trim:true,
+    trim: true,
   },
 
   preview: {
     type: String,
     required: false,
-    trim:true, 
+    trim: true,
   },
 
   owner: {

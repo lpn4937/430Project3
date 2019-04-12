@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>Log in to SongMaker</title>
+  <title>{{title}}</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
@@ -18,22 +18,7 @@
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
   </nav>
-  <section class="formFormat">
-    <h2>Log in</h2>
-    <form class="pageForm" id="loginForm" name="loginForm" action="/login" method="POST" class="mainForm">
-      <div class="form-group">
-        <label for="username">Username: </label>
-        <input class="form-control" id="user" type="text" name="username" placeholder="username"/>
-      </div>
-      <div class="form-group">
-        <label for="pass">Password: </label>
-        <input class="form-control" id="pass" type="password" name="pass" placeholder="password"/>
-      </div>
-      <input type="hidden" name="_csrf" value={{csrfToken}} />
-      <input class="formSubmit btn btn-primary" type="submit" value="Sign In" />
-    </form>
-    <div id="errorMessage"></div>
-  </section>
+  <h2 class="text-center">The page you were looking for was not found.</h2>
   <script src="/assets/bundle.js"></script>
 </body>
 </html>

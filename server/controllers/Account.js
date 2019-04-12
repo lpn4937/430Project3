@@ -6,6 +6,10 @@ const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
+const notFound = (req, res) => {
+  res.render('404', { title: 'not found' });
+};
+
 const signupPage = (req, res) => {
   res.render('signup', { csrfToken: req.csrfToken() });
 };
@@ -83,8 +87,8 @@ const signup = (request, response) => {
   });
 };
 const deleteAccount = (request, response) => {
-  Account.AccountModel.remove({username: request.session.account.username}, (err) => {
-    if(err) console.log(err);
+  Account.AccountModel.remove({ username: request.session.account.username }, (err) => {
+    if (err) console.log(err);
   });
 
   request.session.destroy();
@@ -107,30 +111,33 @@ const changePassword = (request, response) => {
     return (res.status(400).json({ error: 'Passwords do not match' }));
   }
 
-  return Account.AccountModel.authenticate(req.session.account.username, req.body.currentPass, (err, account) => {
-    if (err || !account) {
-      return res.status(401).json({ error: 'Incorrect password' });
-    }
+  return Account.AccountModel.authenticate(
+      req.session.account.username,
+      req.body.currentPass,
+      (err, account) => {
+        if (err || !account) {
+          return res.status(401).json({ error: 'Incorrect password' });
+        }
 
-    const newAccount = account;
+        const newAccount = account;
 
-    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
-      newAccount.password = hash;
-      newAccount.salt = salt;
+        return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+          newAccount.password = hash;
+          newAccount.salt = salt;
 
-      const savePromise = newAccount.save();
+          const savePromise = newAccount.save();
 
-      savePromise.then(() => res.json({
-        password: newAccount.password,
-      }));
+          savePromise.then(() => res.json({
+            password: newAccount.password,
+          }));
 
-      savePromise.catch((saveErr) => {
-        res.json(saveErr);
+          savePromise.catch((saveErr) => {
+            res.json(saveErr);
+          });
+
+          return res.json({ redirect: '/maker' });
+        });
       });
-
-      return res.json({ redirect: '/maker' });
-    });
-  });
 };
 
 module.exports.loginPage = loginPage;
@@ -141,3 +148,4 @@ module.exports.signup = signup;
 module.exports.changePassword = changePassword;
 module.exports.changePasswordPage = changePasswordPage;
 module.exports.deleteAccount = deleteAccount;
+module.exports.notFound = notFound;
