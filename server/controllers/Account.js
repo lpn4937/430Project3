@@ -2,27 +2,33 @@ const models = require('../models');
 
 const Account = models.Account;
 
+// render the loginpage
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
+// render the 404 page
 const notFound = (req, res) => {
   res.render('404', { title: 'not found' });
 };
 
+// render the signup page
 const signupPage = (req, res) => {
   res.render('signup', { csrfToken: req.csrfToken() });
 };
 
+// render the password change page
 const changePasswordPage = (req, res) => {
   res.render('changePassword', { csrfToken: req.csrfToken() });
 };
 
+// logout of the account and redirect to root
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+// allow user to log into their account
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -44,6 +50,7 @@ const login = (request, response) => {
   });
 };
 
+// allow user to create an account
 const signup = (request, response) => {
   const req = request;
   const res = response;
@@ -60,6 +67,7 @@ const signup = (request, response) => {
     return (res.status(400).json({ error: 'Passwords do not match' }));
   }
 
+  // create password
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
       username: req.body.username,
@@ -86,6 +94,8 @@ const signup = (request, response) => {
     });
   });
 };
+
+// delete the user account and redirect them to root
 const deleteAccount = (request, response) => {
   Account.AccountModel.remove({ username: request.session.account.username }, (err) => {
     if (err) console.log(err);
@@ -95,6 +105,7 @@ const deleteAccount = (request, response) => {
   response.redirect('/');
 };
 
+// allow user to change the account password
 const changePassword = (request, response) => {
   const req = request;
   const res = response;
@@ -104,6 +115,7 @@ const changePassword = (request, response) => {
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
+  // check if input is valid
   if (!req.body.currentPass || !req.body.pass || !req.body.pass2) {
     return (res.status(400).json({ error: 'All fields are required' }));
   }
@@ -111,6 +123,8 @@ const changePassword = (request, response) => {
     return (res.status(400).json({ error: 'Passwords do not match' }));
   }
 
+  // check if user password is correct
+  // if correct change password
   return Account.AccountModel.authenticate(
       req.session.account.username,
       req.body.currentPass,
@@ -121,6 +135,7 @@ const changePassword = (request, response) => {
 
         const newAccount = account;
 
+        // similar to how password was created in the first place
         return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
           newAccount.password = hash;
           newAccount.salt = salt;

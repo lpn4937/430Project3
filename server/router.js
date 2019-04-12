@@ -14,7 +14,7 @@ const router = (app) => {
   app.get('/deleteAccount', mid.requiresSecure, mid.requiresLogin,
      controllers.Account.deleteAccount);
   app.get('/deleteSong', mid.requiresSecure, mid.requiresLogin, controllers.Song.deleteSong);
-  app.get('/searchTunes', controllers.Song.search);
+  app.get('/searchTunes', mid.requiresLogin, controllers.Song.search);
   app.get('/maker', mid.requiresLogin, controllers.Song.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Song.make);
   app.get('/addNew', mid.requiresLogin, controllers.Song.addNewPage);

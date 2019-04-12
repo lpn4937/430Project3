@@ -63,8 +63,10 @@ const makeSong = (req, res) => {
   getTunes(url).then(result => {
     const results = JSON.parse(result).results[0];
 
+    // create data based on itunes results
     let songData;
     if (results) {
+      // if the user entered values, use those
       const artist = req.body.artist ? req.body.artist : results.artistName;
       const album = req.body.album ? req.body.album : results.collectionName;
 
@@ -73,7 +75,7 @@ const makeSong = (req, res) => {
         artist,
         album,
         preview: results.previewUrl,
-        art: results.artworkUrl100,
+        art: results.artworkUrl100.replace('100x100', '600x600'),
         owner: req.session.account._id,
       };
     } else {
@@ -90,7 +92,7 @@ const makeSong = (req, res) => {
 
     const songPromise = newSong.save();
 
-    songPromise.then(() => res.json({ redirect: '/maker' }));
+    songPromise.then(() => res.redirect('/'));
 
     songPromise.catch((err) => {
       console.log(err);
@@ -105,7 +107,7 @@ const makeSong = (req, res) => {
   }).catch(err => {
     console.log(err);
   });
-  return res.status(400).json({ error: 'An error occurred' });
+  return null;
 };
 
 // add search result to song list
@@ -120,7 +122,7 @@ const addToList = (req, res) => {
       artist: results.artistName,
       album: results.artistName,
       preview: results.previewUrl,
-      art: results.artworkUrl100,
+      art: results.artworkUrl100.replace('100x100', '600x600'),
       owner: req.session.account._id,
     };
 
@@ -129,11 +131,11 @@ const addToList = (req, res) => {
 
     res.status(200);
     // return songPromise;
-    return res.json({ redirect: '/maker' });
+    return res.redirect('/');
   }).catch(err => {
     console.log(err);
   });
-  return res.status(200);
+  return res.redirect('/');
 };
 
 // search itunes from search bar
@@ -142,6 +144,10 @@ const search = (req, res) => {
 
   getTunes(url).then(result => {
     const results = JSON.parse(result).results;
+    for (i=0; i < results.length-1; i++) {
+      if(results[i].artworkUrl100)
+        results[i].artworkUrl100 = results[i].artworkUrl100.replace('100x100', '600x600');
+    }
 
     res.render('search', { csrfToken: req.csrfToken(), songs: results });
   }).catch(err => {
