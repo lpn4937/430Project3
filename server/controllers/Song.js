@@ -107,7 +107,7 @@ const makeSong = (req, res) => {
   }).catch(err => {
     console.log(err);
   });
-  return null;
+  return res.redirect('/');
 };
 
 // add search result to song list
@@ -144,9 +144,10 @@ const search = (req, res) => {
 
   getTunes(url).then(result => {
     const results = JSON.parse(result).results;
-    for (i=0; i < results.length-1; i++) {
-      if(results[i].artworkUrl100)
+    for (let i = 0; i < results.length - 1; i++) {
+      if (results[i].artworkUrl100) {
         results[i].artworkUrl100 = results[i].artworkUrl100.replace('100x100', '600x600');
+      }
     }
 
     res.render('search', { csrfToken: req.csrfToken(), songs: results });
