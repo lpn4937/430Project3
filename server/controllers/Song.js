@@ -129,26 +129,15 @@ const addToList = (req, res) => {
     };
 
     const newSong = new Song.SongModel(songData);
-    const songPromise = newSong.save();
-
-    songPromise.then(() => res.redirect('/'));
-
-    songPromise.catch((err) => {
-      console.log(err);
-      if (err.code === 11000) {
-        return res.status(400).json({ error: 'Song already exists' });
-      }
-
-      return res.status(400).json({ error: 'An error occurred' });
-    });
+    newSong.save();
 
     res.status(200);
+    newSong.then(() => res.redirect('/'));
     // return songPromise;
-    return songPromise
   }).catch(err => {
     console.log(err);
   });
-  return res.json({ redirect: '/maker' });
+  return res.redirect('/');
 };
 
 // search itunes from search bar
