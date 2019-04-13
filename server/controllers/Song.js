@@ -58,6 +58,7 @@ const makeSong = (req, res) => {
     return res.status(400).json({ error: 'Song name is required' });
   }
 
+  //if user enters artist, use that to narrow search
   const url = req.body.artist ? `https://itunes.apple.com/search?term=${req.body.artist}+${req.body.name}&limit=1` : `https://itunes.apple.com/search?term=${req.body.name}&limit=1`;
 
   getTunes(url).then(result => {
@@ -83,7 +84,7 @@ const makeSong = (req, res) => {
         name: req.body.name,
         artist: req.body.artist,
         album: req.body.album,
-        art: 'assets/img/domoface.jpeg',
+        art: 'assets/img/notfound.png',
         owner: req.session.account._id,
       };
     }
@@ -107,11 +108,12 @@ const makeSong = (req, res) => {
   }).catch(err => {
     console.log(err);
   });
-  return res.redirect('/');
+  return res.json({ redirect: '/maker' });
 };
 
 // add search result to song list
 const addToList = (req, res) => {
+  //ID used to get exact desired song, also faster from iTunes
   const url = `https://itunes.apple.com/lookup?id=${req.query.name}`;
 
   getTunes(url).then(result => {
@@ -131,11 +133,11 @@ const addToList = (req, res) => {
 
     res.status(200);
     // return songPromise;
-    return res.redirect('/');
+    return newSong
   }).catch(err => {
     console.log(err);
   });
-  return res.redirect('/');
+  return res.json({ redirect: '/maker' });
 };
 
 // search itunes from search bar
@@ -144,6 +146,7 @@ const search = (req, res) => {
 
   getTunes(url).then(result => {
     const results = JSON.parse(result).results;
+    //itunes only returns 100x100 links, replacing gets the 600x600 url
     for (let i = 0; i < results.length - 1; i++) {
       if (results[i].artworkUrl100) {
         results[i].artworkUrl100 = results[i].artworkUrl100.replace('100x100', '600x600');

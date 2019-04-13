@@ -27,12 +27,14 @@ const SongSchema = new mongoose.Schema({
     trim: true,
   },
 
+  //album art displayed with song
   art: {
     type: String,
     required: false,
     trim: true,
   },
 
+  //audio preview displayed with song
   preview: {
     type: String,
     required: false,
