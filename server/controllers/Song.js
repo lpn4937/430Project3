@@ -91,24 +91,29 @@ const makeSong = (req, res) => {
 
     const newSong = new Song.SongModel(songData);
 
-    const songPromise = newSong.save();
+    newSong.save();
 
-    songPromise.then(() => res.redirect('/'));
+    // songPromise.then(() => res.redirect('/'));
 
-    songPromise.catch((err) => {
-      console.log(err);
-      if (err.code === 11000) {
-        return res.status(400).json({ error: 'Song already exists' });
-      }
+    // songPromise.catch((err) => {
+    //   console.log(err);
+    //   if (err.code === 11000) {
+    //     return res.status(400).json({ error: 'Song already exists' });
+    //   }
 
-      return res.status(400).json({ error: 'An error occurred' });
-    });
+    //   return res.status(400).json({ error: 'An error occurred' });
+    // });
 
-    return songPromise;
+    return res.redirect('/');
   }).catch(err => {
     console.log(err);
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Song already exists' });
+    }
+
+    return res.status(400).json({ error: 'An error occurred' });
   });
-  return res.json({ redirect: '/maker' });
+  return null;
 };
 
 // add search result to song list
@@ -131,13 +136,12 @@ const addToList = (req, res) => {
     const newSong = new Song.SongModel(songData);
     newSong.save();
 
-    res.status(200);
-    newSong.then(() => res.redirect('/'));
     // return songPromise;
+    return res.redirect('/');
   }).catch(err => {
     console.log(err);
   });
-  return res.redirect('/');
+  // return res.redirect('/');
 };
 
 // search itunes from search bar
