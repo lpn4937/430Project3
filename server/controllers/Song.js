@@ -104,7 +104,8 @@ const makeSong = (req, res) => {
     //   return res.status(400).json({ error: 'An error occurred' });
     // });
 
-    return res.redirect('/');
+    //return res.redirect('/');
+    return res.json({ redirect: '/maker'});
   }).catch(err => {
     console.log(err);
     if (err.code === 11000) {
