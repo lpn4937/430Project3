@@ -37,29 +37,47 @@ const handleSignup = (e) => {
 
 const LoginWindow = (props) => {
     return (
-        <form id="loginForm" name="loginForm" onSubmit={handleLogin} action="/login" method="POST" className="mainForm">
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username"/>
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password"/>
-            <input type="hidden" name="_csrf" value={props.csrf}/>
-            <input className="formSubmit" type="submit" value="Sign in" />
-        </form>
+        <section className="formFormat">
+            <h2>Log in</h2>
+            <form className="pageForm" id="loginForm" onSubmit={handleLogin} name="loginForm" action="/login" method="POST" class="mainForm">
+            <div className="form-group">
+                <label for="username">Username: </label>
+                <input className="form-control" id="user" type="text" name="username" placeholder="username"/>
+            </div>
+            <div className="form-group">
+                <label for="pass">Password: </label>
+                <input className="form-control" id="pass" type="password" name="pass" placeholder="password"/>
+            </div>
+            <input type="hidden" name="_csrf" value={props.csrf} />
+            <input className="formSubmit btn btn-primary" type="submit" value="Sign In" />
+            </form>
+            <div id="errorMessage"></div>
+        </section>
     )
 };
 
 const SignupWindow = (props) => {
     return (
-        <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" className="mainForm">
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username"/>
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password"/>
-            <label htmlFor="pass2">Password: </label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
-            <input type="hidden" name="_csrf" value={props.csrf}/>
-            <input className="formSubmit" type="submit" value="Sign up" />
-        </form>
+        <section className="formFormat">
+            <h2>Sign Up</h2>
+            <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" class="mainForm">
+            <div className="form-group">
+                <label for="username">Username: </label>
+                <input className="form-control" id="user" type="text" name="username" placeholder="Username"/>
+            </div>
+            <div className="form-group">
+                <label for="pass">Password: </label>
+                <input className="form-control" id="pass" type="password" name="pass" placeholder="Password"/>
+            </div>
+            <div className="form-group">
+                <label for="pass2">Password: </label>
+                <input className="form-control" id="pass2" type="password" name="pass2" placeholder="Retype Password"/>
+            </div>
+            <input type="hidden" name="_csrf" value={props.csrf} />
+            <input className="formSubmit btn btn-primary" type="submit" value="Sign Up" />
+            <div id="errorMessage"></div>
+            </form>
+        </section>
     )
 };
 

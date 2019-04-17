@@ -18,29 +18,63 @@ var handleDomo = function handleDomo(e) {
 };
 
 var DomoForm = function DomoForm(props) {
-    return React.createElement(
-        "form",
-        { id: "domoForm", onSubmit: handleDomo, name: "domoForm", action: "/maker", method: "POST", className: "domoForm" },
+    return (
+        // <form id="domoForm" onSubmit={handleDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
+        //     <label htmlFor="name">Name: </label>
+        //     <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+        //     <label htmlFor="age">Age: </label>
+        //     <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+        //     <label htmlFor="perception">Perception: </label>
+        //     <input id="domoPerception" type="text" name="perception" placeholder="Domo Percpetion" />
+        //     <input type="hidden" name="_csrf" value={props.csrf} />
+        //     <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+        // </form>
         React.createElement(
-            "label",
-            { htmlFor: "name" },
-            "Name: "
-        ),
-        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-        React.createElement(
-            "label",
-            { htmlFor: "age" },
-            "Age: "
-        ),
-        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-        React.createElement(
-            "label",
-            { htmlFor: "perception" },
-            "Perception: "
-        ),
-        React.createElement("input", { id: "domoPerception", type: "text", name: "perception", placeholder: "Domo Percpetion" }),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+            "section",
+            { className: "formFormat" },
+            React.createElement(
+                "h2",
+                null,
+                "Add a song"
+            ),
+            React.createElement(
+                "form",
+                { id: "songForm", name: "songForm", action: "/maker", method: "POST", "class": "pageForm" },
+                React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement(
+                        "label",
+                        { "for": "name" },
+                        "Name: "
+                    ),
+                    React.createElement("input", { className: "form-control", id: "songName", type: "text", name: "name", placeholder: "Song Name" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement(
+                        "label",
+                        { "for": "artist" },
+                        "Artist: "
+                    ),
+                    React.createElement("input", { className: "form-control", id: "songArtist", type: "text", name: "artist", placeholder: "Song Artist" })
+                ),
+                React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement(
+                        "label",
+                        { "for": "album" },
+                        "Album: "
+                    ),
+                    React.createElement("input", { className: "form-control", id: "songAlbum", type: "text", name: "album", placeholder: "Song Album" })
+                ),
+                React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+                React.createElement("input", { className: "btn btn-primary", type: "submit", value: "Make Song" })
+            ),
+            React.createElement("div", { id: "errorMessage" })
+        )
     );
 };
 

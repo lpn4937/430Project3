@@ -10,16 +10,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <link rel="stylesheet" type="text/css" href="/assets/bootstrap.css"/>
 </head>
-<body> 
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary"><a href="/login"></a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a id="loginButton" class="text-light nav-link active" href="/login">Log in</a></li>
+      <li class="nav-item"><a id="signupButton" class="text-light nav-link active" href="/signup">Sign up</a></li>
+    </ul>
   </nav>
   <section id="content"></section>
-  <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage">Wrong username or password</span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
-  </div>
   <script src="/assets/loginBundle.js"></script>
 </body>
 </html>

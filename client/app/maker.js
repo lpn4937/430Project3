@@ -17,16 +17,36 @@ const handleDomo = (e) => {
 
 const DomoForm = (props) => {
     return (
-        <form id="domoForm" onSubmit={handleDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
-            <label htmlFor="name">Name: </label>
-            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
-            <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
-            <label htmlFor="perception">Perception: </label>
-            <input id="domoPerception" type="text" name="perception" placeholder="Domo Percpetion" />
+        // <form id="domoForm" onSubmit={handleDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
+        //     <label htmlFor="name">Name: </label>
+        //     <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+        //     <label htmlFor="age">Age: </label>
+        //     <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+        //     <label htmlFor="perception">Perception: </label>
+        //     <input id="domoPerception" type="text" name="perception" placeholder="Domo Percpetion" />
+        //     <input type="hidden" name="_csrf" value={props.csrf} />
+        //     <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+        // </form>
+        <section className="formFormat">
+            <h2>Add a song</h2>
+            <form id="songForm" name="songForm" action="/maker" method="POST" class="pageForm">
+            <div className="form-group">
+            <label for="name">Name: </label>
+            <input className="form-control" id="songName" type="text" name="name" placeholder="Song Name"/>
+            </div>
+            <div className="form-group">
+            <label for="artist">Artist: </label>
+            <input className="form-control" id="songArtist" type="text" name="artist" placeholder="Song Artist"/>
+            </div>
+            <div className="form-group">
+            <label for="album">Album: </label>
+            <input className="form-control" id="songAlbum" type="text" name="album" placeholder="Song Album"/>
+            </div>
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Make Domo" />
-        </form>
+            <input className="btn btn-primary" type="submit" value="Make Song" />
+            </form>
+            <div id="errorMessage"></div>
+        </section>
     );
 };
 
