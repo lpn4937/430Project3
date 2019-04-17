@@ -1,32 +1,4 @@
-.close{
-    position: absolute;
-    left: 5%;
-}
-audio{
-    width: 100%;
-    background-color: #F1F3F4;
-}
-.nav-item{
-    font-size: 1.5em;
-}
-#searchTunesForm{
-    margin-top: .75em;
-}
-.nav-item{
-    margin-right: 10px;
-}
-.formFormat{
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 30px;
-}
-body{
-    background-color: rgb(235, 235, 235) !important;
-}
-#errorMessage{
-    color: red;
-}
-/* html, body {
+html, body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -75,10 +47,10 @@ nav:nth-child(1) {
     background-color: #66bdff;
 }
 
-.songForm {
+.domoForm, .removeForm {
     border: 2px solid #338acc;
     height: 35px;
-    width: 700px;
+    width: 1000px;
     margin-top:0px;
     padding-top:10px;
     background-color: #55acee;
@@ -86,7 +58,7 @@ nav:nth-child(1) {
     border-top-right-radius: 4px;
 }
 
-.songForm label {
+.domoForm label {
     display: inline-block;
     width: 75px;
     margin-left: 10px;
@@ -95,7 +67,7 @@ nav:nth-child(1) {
     color: white;
 }
 
-.songForm input[type=text] {
+.domoForm input[type=text] {
     float:left;
 }
 
@@ -175,7 +147,7 @@ nav:nth-child(1) {
     box-shadow: 0px 0px 1px 1px #55acee;
 }
 
-#songMessage {
+#domoMessage {
     display:none;
     top: 250px;
     width: 250px;
@@ -186,7 +158,7 @@ nav:nth-child(1) {
     overflow: hidden;
 }
 
-#songMessage h3 {
+#domoMessage h3 {
     width: 200px;
     position: absolute;
     top: 0px;
@@ -206,7 +178,7 @@ nav:nth-child(1) {
     font-style: italic;
 }
 
-#song {
+#domo {
     z-index: 225;
     margin-top: -20px;
     margin-left: 135px;
@@ -217,7 +189,7 @@ nav:nth-child(1) {
     transform: rotate(330deg);
 }
 
-#songs {
+#domos {
     width: 40%;
     min-width: 400px;
     border: 2px solid #55acee;
@@ -226,7 +198,7 @@ nav:nth-child(1) {
     margin-top: 100px;
 }
 
-.song {
+.domo {
     width: 95%;
     margin: 0 auto;
     margin-top: 2px;
@@ -239,14 +211,14 @@ nav:nth-child(1) {
     overflow: hidden;
 }
 
-.song:hover {
+.domo:hover {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
     transition: background-color 2.6s ease-out;
     background-color: #66bfff;
 }
 
-img.songFace {
+img.domoFace {
     margin-left: 25px;
     margin-right: 10px;
     height: 50px;
@@ -264,7 +236,7 @@ h3.emptyDomo {
     margin-top: 18px;
 }
 
-h3.songName {
+h3.domoName {
     float:left;
     width: 200px;
     font-weight: bold;
@@ -272,7 +244,7 @@ h3.songName {
     font-size: 1.5em;
 }
 
-h3.songAge {
+h3.domoAge {
     float:right;
     text-align: left;
     width: 100px;
@@ -280,11 +252,17 @@ h3.songAge {
     padding-right: 40px;
     font-size: 1.5em;
 }
+/*h3.domoPerception {
+    width: 40px;
+    font-weight: bold;
+    padding-right: 10px;
+    font-size: 1.5em;
+}*/
 
-.song:first-child {
+.domo:first-child {
     margin-top: 10px;
 }
 
-.song:last-child {
+.domo:last-child {
     margin-bottom:10px;
-} */
+}
