@@ -147,7 +147,8 @@ const addToList = (req, res) => {
 
 // search itunes from search bar
 const search = (req, res) => {
-  const url = `https://itunes.apple.com/search?term=${req.query.searchBar}`;
+  let term = Object.keys(req.query)[0];
+  const url = `https://itunes.apple.com/search?term=${term}`;
 
   getTunes(url).then(result => {
     const results = JSON.parse(result).results;
@@ -158,23 +159,21 @@ const search = (req, res) => {
       }
     }
 
-    res.render('search', { csrfToken: req.csrfToken(), songs: results });
+    //res.render('search', { csrfToken: req.csrfToken(), songs: results });
+    return res.json({songs:results});
   }).catch(err => {
     console.log(err);
   });
 };
 
-const getSongs = (req, res) => {
+const getSongs = (req, res) => Song.SongModel.findByOwner(req.session.account._id, (err, docs) => {
+  if (err) {
+    console.log(err);
+    return res.status(400).json({ error: 'An error occurred' });
+  }
 
-  return Song.SongModel.findByOwner(req.session.account._id, (err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ error: 'An error occurred' });
-    }
-
-    return res.json({ songs: docs });
-  });
-};
+  return res.json({ songs: docs });
+});
 
 module.exports.makerPage = makerPage;
 module.exports.make = makeSong;
