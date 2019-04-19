@@ -11,6 +11,11 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
+// render the password change page
+const changePasswordPage = (req, res) => {
+  res.render('changePassword', { csrfToken: req.csrfToken() });
+};
+
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -86,8 +91,73 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+
+// delete the user account and redirect them to root
+const deleteAccount = (request, response) => {
+  Account.AccountModel.remove({ username: request.session.account.username }, (err) => {
+    if (err) console.log(err);
+  });
+
+  request.session.destroy();
+  response.redirect('/');
+};
+
+// allow user to change the account password
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+
+  // cast to strings to cover up some security flaws
+  req.body.currentPass = `${req.body.currentPass}`;
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
+
+  // check if input is valid
+  if (!req.body.currentPass || !req.body.pass || !req.body.pass2) {
+    return (res.status(400).json({ error: 'All fields are required' }));
+  }
+  if (req.body.pass !== req.body.pass2) {
+    return (res.status(400).json({ error: 'Passwords do not match' }));
+  }
+
+  // check if user password is correct
+  // if correct change password
+  return Account.AccountModel.authenticate(
+      req.session.account.username,
+      req.body.currentPass,
+      (err, account) => {
+        if (err || !account) {
+          return res.status(401).json({ error: 'Incorrect password' });
+        }
+
+        const newAccount = account;
+
+        // similar to how password was created in the first place
+        return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+          newAccount.password = hash;
+          newAccount.salt = salt;
+
+          const savePromise = newAccount.save();
+
+          savePromise.then(() => res.json({
+            password: newAccount.password,
+          }));
+
+          savePromise.catch((saveErr) => {
+            res.json(saveErr);
+          });
+
+          return res.json({ redirect: '/maker' });
+        });
+      });
+};
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+
+module.exports.changePassword = changePassword;
+module.exports.changePasswordPage = changePasswordPage;
+module.exports.deleteAccount = deleteAccount;

@@ -1,11 +1,13 @@
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var handleDomo = function handleDomo(e) {
     e.preventDefault();
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    if ($("#songName").val() == '' || $("#songArtist").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -18,6 +20,8 @@ var handleDomo = function handleDomo(e) {
 };
 
 var DomoForm = function DomoForm(props) {
+    var _React$createElement, _React$createElement2, _React$createElement3;
+
     return (
         // <form id="domoForm" onSubmit={handleDomo} name="domoForm" action="/maker" method="POST" className = "domoForm">
         //     <label htmlFor="name">Name: </label>
@@ -48,7 +52,7 @@ var DomoForm = function DomoForm(props) {
                         { "for": "name" },
                         "Name: "
                     ),
-                    React.createElement("input", { className: "form-control", id: "songName", type: "text", name: "name", placeholder: "Song Name" })
+                    React.createElement("input", (_React$createElement = { id: "songName", className: "form-control" }, _defineProperty(_React$createElement, "id", "songName"), _defineProperty(_React$createElement, "type", "text"), _defineProperty(_React$createElement, "name", "name"), _defineProperty(_React$createElement, "placeholder", "Song Name"), _React$createElement))
                 ),
                 React.createElement(
                     "div",
@@ -58,7 +62,7 @@ var DomoForm = function DomoForm(props) {
                         { "for": "artist" },
                         "Artist: "
                     ),
-                    React.createElement("input", { className: "form-control", id: "songArtist", type: "text", name: "artist", placeholder: "Song Artist" })
+                    React.createElement("input", (_React$createElement2 = { id: "songArtist", className: "form-control" }, _defineProperty(_React$createElement2, "id", "songArtist"), _defineProperty(_React$createElement2, "type", "text"), _defineProperty(_React$createElement2, "name", "artist"), _defineProperty(_React$createElement2, "placeholder", "Song Artist"), _React$createElement2))
                 ),
                 React.createElement(
                     "div",
@@ -68,7 +72,7 @@ var DomoForm = function DomoForm(props) {
                         { "for": "album" },
                         "Album: "
                     ),
-                    React.createElement("input", { className: "form-control", id: "songAlbum", type: "text", name: "album", placeholder: "Song Album" })
+                    React.createElement("input", (_React$createElement3 = { id: "songAlbum", className: "form-control" }, _defineProperty(_React$createElement3, "id", "songAlbum"), _defineProperty(_React$createElement3, "type", "text"), _defineProperty(_React$createElement3, "name", "album"), _defineProperty(_React$createElement3, "placeholder", "Song Album"), _React$createElement3))
                 ),
                 React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
                 React.createElement("input", { className: "btn btn-primary", type: "submit", value: "Make Song" })
@@ -124,41 +128,88 @@ var DomoList = function DomoList(props) {
     }
 
     var domoNodes = props.domos.map(function (domo) {
-        return React.createElement(
-            "div",
-            { key: domo._id, className: "domo" },
-            React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+        return (
+            // <div key={domo._id} className="domo">
+            //     <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+            //     <h3 className="domoName">Name: {domo.name}</h3>
+            //     <h3 className="domoAge">Age: {domo.age}</h3>
+            //     <h3 className="domoPerception">Perception: {domo.perception}</h3>
+            // </div>
             React.createElement(
-                "h3",
-                { className: "domoName" },
-                "Name: ",
-                domo.name
-            ),
-            React.createElement(
-                "h3",
-                { className: "domoAge" },
-                "Age: ",
-                domo.age
-            ),
-            React.createElement(
-                "h3",
-                { className: "domoPerception" },
-                "Perception: ",
-                domo.perception
+                "div",
+                { className: "col-lg-2" },
+                React.createElement(
+                    "div",
+                    { className: "card" },
+                    React.createElement("img", { src: domo.art, alt: "card image cap", className: "card-img-top" }),
+                    React.createElement(
+                        "audio",
+                        { className: "media controls" },
+                        React.createElement("source", { src: domo.preview, type: "audio/x-m4a" }),
+                        "Your browser does not support the audio element."
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "card-body" },
+                        React.createElement(
+                            "h5",
+                            { className: "songName" },
+                            "Name: "
+                        ),
+                        React.createElement(
+                            "p",
+                            null,
+                            domo.name
+                        ),
+                        React.createElement(
+                            "h5",
+                            { className: "songArtist" },
+                            "Artist: "
+                        ),
+                        React.createElement(
+                            "p",
+                            null,
+                            domo.artist
+                        ),
+                        React.createElement(
+                            "h5",
+                            { className: "songAlbum" },
+                            "Album: "
+                        ),
+                        React.createElement(
+                            "p",
+                            null,
+                            domo.album
+                        )
+                    ),
+                    React.createElement(
+                        "form",
+                        { className: "close", action: "/deleteSong", name: domo.name },
+                        React.createElement(
+                            "button",
+                            { type: "submit", className: "close", "aria-label": "Close", name: "name", value: domo.name },
+                            React.createElement(
+                                "span",
+                                { "aria-hidden": "true" },
+                                "\xD7"
+                            )
+                        )
+                    )
+                )
             )
         );
     });
 
     return React.createElement(
         "div",
-        { className: "domoList" },
+        { className: "domoList row" },
         domoNodes
     );
 };
 
 var loadDomosFromServer = function loadDomosFromServer() {
-    sendAjax('GET', '/getDomos', null, function (data) {
-        ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+    sendAjax('GET', '/getSongs', null, function (data) {
+        ReactDOM.render(React.createElement(DomoList, { domos: data.songs }), document.querySelector("#domos"));
     });
 };
 

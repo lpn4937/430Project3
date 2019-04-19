@@ -3,7 +3,7 @@ const handleDomo = (e) => {
 
     $("#domoMessage").animate({width:'hide'},350);
     
-    if($("#domoName").val() == '' || $("#domoAge").val() == ''){
+    if($("#songName").val() == '' || $("#songArtist").val() == ''){
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -32,15 +32,15 @@ const DomoForm = (props) => {
             <form id="songForm" name="songForm" action="/maker" method="POST" class="pageForm">
             <div className="form-group">
             <label for="name">Name: </label>
-            <input className="form-control" id="songName" type="text" name="name" placeholder="Song Name"/>
+            <input id="songName" className="form-control" id="songName" type="text" name="name" placeholder="Song Name"/>
             </div>
             <div className="form-group">
             <label for="artist">Artist: </label>
-            <input className="form-control" id="songArtist" type="text" name="artist" placeholder="Song Artist"/>
+            <input id="songArtist" className="form-control" id="songArtist" type="text" name="artist" placeholder="Song Artist"/>
             </div>
             <div className="form-group">
             <label for="album">Album: </label>
-            <input className="form-control" id="songAlbum" type="text" name="album" placeholder="Song Album"/>
+            <input id="songAlbum" className="form-control" id="songAlbum" type="text" name="album" placeholder="Song Album"/>
             </div>
             <input type="hidden" name="_csrf" value={props.csrf} />
             <input className="btn btn-primary" type="submit" value="Make Song" />
@@ -89,26 +89,44 @@ const DomoList = function(props) {
 
     const domoNodes = props.domos.map(function(domo){
         return (
-            <div key={domo._id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-                <h3 className="domoName">Name: {domo.name}</h3>
-                <h3 className="domoAge">Age: {domo.age}</h3>
-                <h3 className="domoPerception">Perception: {domo.perception}</h3>
+            // <div key={domo._id} className="domo">
+            //     <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+            //     <h3 className="domoName">Name: {domo.name}</h3>
+            //     <h3 className="domoAge">Age: {domo.age}</h3>
+            //     <h3 className="domoPerception">Perception: {domo.perception}</h3>
+            // </div>
+            <div className="col-lg-2">
+                <div className="card"><img src={domo.art} alt="card image cap" className="card-img-top"/>
+                    <audio className="media controls">
+                        <source src={domo.preview} type="audio/x-m4a"></source>
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div className="card-body">
+                        <h5 className="songName">Name: </h5><p>{domo.name}</p>
+                        <h5 className="songArtist">Artist: </h5><p>{domo.artist}</p>
+                        <h5 className="songAlbum">Album: </h5><p>{domo.album}</p>
+                    </div>
+                    <form className="close" action="/deleteSong" name={domo.name}>
+                        <button type="submit" className="close" aria-label="Close" name="name" value={domo.name}>
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         );
     });
 
     return (
-        <div className="domoList">
+        <div className="domoList row">
             {domoNodes}
         </div>
     );
 };
 
 const loadDomosFromServer = () => {
-    sendAjax('GET','/getDomos',null,(data)=>{
+    sendAjax('GET','/getSongs',null,(data)=>{
         ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#domos")
+            <DomoList domos={data.songs} />, document.querySelector("#domos")
         );
     });
 };
