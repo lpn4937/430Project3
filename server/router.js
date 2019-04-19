@@ -26,7 +26,7 @@ const router = (app) => {
   app.get('/share', mid.requiresLogin, mid.requiresSecure, controllers.Song.sharePage);
   app.get('/addToList', mid.requiresLogin, mid.requiresSecure, controllers.Song.addToList);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
-  //app.get('*', controllers.Account.notFound, mid.requiresSecure);
+  // app.get('*', controllers.Account.notFound, mid.requiresSecure);
 };
 
 module.exports = router;

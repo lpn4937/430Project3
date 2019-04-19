@@ -104,8 +104,8 @@ const makeSong = (req, res) => {
     //   return res.status(400).json({ error: 'An error occurred' });
     // });
 
-    //return res.redirect('/');
-    return res.json({ redirect: '/maker'});
+    // return res.redirect('/');
+    return res.json({ redirect: '/maker' });
   }).catch(err => {
     console.log(err);
     if (err.code === 11000) {
@@ -164,9 +164,7 @@ const search = (req, res) => {
   });
 };
 
-const getSongs = (request, response) => {
-  const req = request;
-  const res = response;
+const getSongs = (req, res) => {
 
   return Song.SongModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
