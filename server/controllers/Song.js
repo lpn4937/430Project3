@@ -93,18 +93,6 @@ const makeSong = (req, res) => {
 
     newSong.save();
 
-    // songPromise.then(() => res.redirect('/'));
-
-    // songPromise.catch((err) => {
-    //   console.log(err);
-    //   if (err.code === 11000) {
-    //     return res.status(400).json({ error: 'Song already exists' });
-    //   }
-
-    //   return res.status(400).json({ error: 'An error occurred' });
-    // });
-
-    // return res.redirect('/');
     return res.json({ redirect: '/maker' });
   }).catch(err => {
     console.log(err);

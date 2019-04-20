@@ -19,7 +19,7 @@ var handleDomo = function handleDomo(e) {
     return false;
 };
 
-var SongForm = function SongForm(props) {
+var SongFormWindow = function SongFormWindow(props) {
     var _React$createElement, _React$createElement2, _React$createElement3;
 
     return React.createElement(
@@ -119,7 +119,7 @@ var ChangePassForm = function ChangePassForm(props) {
     );
 };
 
-var DomoList = function DomoList(props) {
+var SongListWindow = function SongListWindow(props) {
     if (props.domos.length === 0) {
         return React.createElement(
             "div",
@@ -135,7 +135,7 @@ var DomoList = function DomoList(props) {
     var songNodes = props.domos.map(function (domo) {
         return React.createElement(
             "div",
-            { className: "col-lg-2" },
+            { className: "col-lg-2 mt-3" },
             React.createElement(
                 "div",
                 { className: "card" },
@@ -192,15 +192,6 @@ var DomoList = function DomoList(props) {
                             "\xD7"
                         )
                     )
-                ),
-                React.createElement(
-                    "form",
-                    { className: "text-center", action: "/addToList", name: domo.name },
-                    React.createElement(
-                        "button",
-                        { className: "btn btn-primary", type: "submit", "aria-label": "Close", name: "name", value: domo.name },
-                        "Add to my list"
-                    )
                 )
             )
         );
@@ -213,7 +204,7 @@ var DomoList = function DomoList(props) {
     );
 };
 
-var SearchList = function SearchList(props) {
+var SearchListWindow = function SearchListWindow(props) {
     if (props.length === 0) {
         return React.createElement(
             "div",
@@ -282,6 +273,15 @@ var SearchList = function SearchList(props) {
                         { className: "btn btn-primary", type: "submit", "aria-label": "Close", name: "name", value: song.trackId },
                         "Add to my list"
                     )
+                ),
+                React.createElement(
+                    "div",
+                    { className: "card-footer text-center" },
+                    React.createElement(
+                        "button",
+                        { className: "btn text-center", id: song.trackId, onClick: getInfo, "aria-label": "Close", name: "name", value: song.trackId },
+                        "More Info"
+                    )
                 )
             )
         );
@@ -294,20 +294,160 @@ var SearchList = function SearchList(props) {
     );
 };
 
+var SongInfoWindow = function SongInfoWindow(props) {
+    console.log(props);
+    if (props.length === 0) {
+        return React.createElement(
+            "div",
+            { className: "searchList" },
+            React.createElement(
+                "h3",
+                { className: "emptySong" },
+                "No results"
+            )
+        );
+    }
+    var video = void 0;
+    if (props.data.videoData) {
+        video = React.createElement(
+            "video",
+            { controls: true, alt: "assets/img/notfound.png" },
+            React.createElement("source", { src: props.data.videoData.previewUrl }),
+            "Your browser does not support the video tag."
+        );
+    } else {
+        video = React.createElement("div", null);
+    }
+    var date = props.data.songData.releaseDate.slice(0, 10);
+    var ms = props.data.songData.trackTimeMillis;
+    var time = (Math.floor(ms / 1000 / 60) << 0) + " : " + Math.floor(ms / 1000 % 60);
+
+    return React.createElement(
+        "div",
+        { className: "col-lg-10 offset-lg-1 mt-4" },
+        React.createElement(
+            "div",
+            { className: "card center-text" },
+            React.createElement(
+                "div",
+                null,
+                video
+            ),
+            React.createElement(
+                "div",
+                { className: "card-body" },
+                React.createElement(
+                    "h4",
+                    { className: "card-title" },
+                    props.data.songData.trackName
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Artist: "
+                    ),
+                    props.data.songData.artistName
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Album: "
+                    ),
+                    props.data.songData.collectionName
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Genre: "
+                    ),
+                    props.data.songData.primaryGenreName
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Album Price: "
+                    ),
+                    "$",
+                    props.data.songData.collectionPrice
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Release Date: "
+                    ),
+                    date
+                ),
+                React.createElement(
+                    "p",
+                    { className: "card-text" },
+                    React.createElement(
+                        "b",
+                        null,
+                        "Song Length: "
+                    ),
+                    time
+                ),
+                React.createElement(
+                    "button",
+                    { className: "btn" },
+                    React.createElement(
+                        "a",
+                        { href: props.data.songData.trackViewUrl },
+                        "View in iTunes"
+                    )
+                ),
+                React.createElement(
+                    "form",
+                    { className: "mt-4", action: "/addToList", name: props.data.songData.trackId },
+                    React.createElement(
+                        "button",
+                        { className: "btn btn-primary", type: "submit", "aria-label": "Close", name: "name", value: props.data.songData.trackId },
+                        "Add to my list"
+                    )
+                )
+            )
+        )
+    );
+};
+
 var loadSongsFromServer = function loadSongsFromServer() {
     sendAjax('GET', '/getSongs', null, function (data) {
-        ReactDOM.render(React.createElement(DomoList, { domos: data.songs }), document.querySelector("#content"));
+        ReactDOM.render(React.createElement(SongListWindow, { domos: data.songs }), document.querySelector("#content"));
     });
 };
 
 var searchiTunes = function searchiTunes(term) {
     sendAjax('GET', '/searchTunes', term, function (data) {
-        ReactDOM.render(React.createElement(SearchList, { songs: data.songs }), document.querySelector("#content"));
+        ReactDOM.render(React.createElement(SearchListWindow, { songs: data.songs }), document.querySelector("#content"));
+    });
+};
+
+var getInfo = function getInfo(e) {
+    sendAjax('GET', '/searchTunes', e.target.value, function (data) {
+        sendAjax('GET', "https://itunes.apple.com/search?term=" + data.songs[0].trackName + "+" + data.songs[0].artistName + "&entity=musicVideo", null, function (videoData) {
+            var propData = { songData: data.songs[0], videoData: videoData.results[0] };
+            ReactDOM.render(React.createElement(SongInfoWindow, { data: propData }), document.querySelector("#content"));
+        });
     });
 };
 
 var setup = function setup(csrf) {
-    ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#content"));
+    ReactDOM.render(React.createElement(SongListWindow, { domos: [] }), document.querySelector("#content"));
 
     loadSongsFromServer();
 
@@ -317,9 +457,9 @@ var setup = function setup(csrf) {
     var shareButton = document.querySelector("#shareButton");
     var viewSongsButton = document.querySelector("#viewSongsButton");
     var searchForm = document.querySelector("#searchTunesForm");
-    var test = document.querySelector("#testButton");
+    var curatorButton = document.querySelector("#curatorButton");
 
-    test.addEventListener("click", function (e) {
+    curatorButton.addEventListener("click", function (e) {
         e.preventDefault();
 
         console.log("addNewSong");
@@ -352,7 +492,7 @@ var setup = function setup(csrf) {
 };
 
 var createSongForm = function createSongForm(csrf) {
-    ReactDOM.render(React.createElement(SongForm, { csrf: csrf }), document.querySelector("#content"));
+    ReactDOM.render(React.createElement(SongFormWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 var changePass = function changePass(csrf) {
     ReactDOM.render(React.createElement(ChangePassForm, { csrf: csrf }), document.querySelector("#content"));

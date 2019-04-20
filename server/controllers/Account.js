@@ -91,6 +91,12 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+const makePremium = (req, res) => {
+  req.session.account.premium = true;
+  //redirect the user to page they were going to with the same query they had
+  return false;
+}
+
 
 // delete the user account and redirect them to root
 const deleteAccount = (request, response) => {

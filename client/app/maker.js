@@ -15,7 +15,7 @@ const handleDomo = (e) => {
     return false;
 }
 
-const SongForm = (props) => {
+const SongFormWindow = (props) => {
     return (
         <section className="formFormat">
             <h2>Add a song</h2>
@@ -67,7 +67,7 @@ const ChangePassForm = (props) => {
 };
 
 
-const DomoList = function(props) {
+const SongListWindow = function(props) {
     if(props.domos.length === 0) {
         return (
             <div className="domoList">
@@ -78,7 +78,7 @@ const DomoList = function(props) {
 
     const songNodes = props.domos.map(function(domo){
         return (
-            <div className="col-lg-2">
+            <div className="col-lg-2 mt-3">
                 <div className="card"><img src={domo.art} alt="card image cap" className="card-img-top"/>
                     <audio className="media" controls>
                         <source src={domo.preview} type="audio/x-m4a"></source>
@@ -94,9 +94,6 @@ const DomoList = function(props) {
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </form>
-                    <form className="text-center" action="/addToList" name={domo.name}>
-                        <button className="btn btn-primary" type="submit" aria-label="Close" name="name" value={domo.name}>Add to my list</button>
-                    </form>
                 </div>
             </div>
         );
@@ -109,7 +106,7 @@ const DomoList = function(props) {
     );
 };
 
-const SearchList = function(props) {
+const SearchListWindow = function(props) {
     if(props.length === 0) {
         return (
             <div className="searchList">
@@ -134,6 +131,9 @@ const SearchList = function(props) {
                     <form className="text-center" action="/addToList" name={song.trackId}>
                         <button className="btn btn-primary" type="submit" aria-label="Close" name="name" value={song.trackId}>Add to my list</button>
                     </form>
+                    <div className="card-footer text-center">
+                        <button className="btn text-center" id={song.trackId} onClick={getInfo} aria-label="Close" name="name" value={song.trackId}>More Info</button>
+                    </div>
                 </div>
             </div>
         );
@@ -145,12 +145,57 @@ const SearchList = function(props) {
         </div>
     );
 
+};
+
+const SongInfoWindow = function(props) {
+    console.log(props);
+    if(props.length === 0) {
+        return (
+            <div className="searchList">
+                <h3 className="emptySong">No results</h3>
+            </div>
+        );
+    }
+    let video;
+    if(props.data.videoData){
+        video = <video controls alt="assets/img/notfound.png">
+                    <source src={props.data.videoData.previewUrl}></source>
+                    Your browser does not support the video tag.
+                </video>
+    }
+    else{
+        video = <div></div>
+    }
+    let date = props.data.songData.releaseDate.slice(0,10);
+    let ms = props.data.songData.trackTimeMillis;
+    let time = `${Math.floor((ms/1000)/60) << 0} : ${Math.floor((ms/1000)%60)}`;
+
+    return(
+        <div className="col-lg-10 offset-lg-1 mt-4">
+            <div className="card center-text">
+                <div>{video}</div>
+                <div className="card-body">
+                    <h4 className="card-title">{props.data.songData.trackName}</h4>
+                    <p className="card-text"><b>Artist: </b>{props.data.songData.artistName}</p>
+                    <p className="card-text"><b>Album: </b>{props.data.songData.collectionName}</p>
+                    <p className="card-text"><b>Genre: </b>{props.data.songData.primaryGenreName}</p>
+                    <p className="card-text"><b>Album Price: </b>${props.data.songData.collectionPrice}</p>
+                    <p className="card-text"><b>Release Date: </b>{date}</p>
+                    <p className="card-text"><b>Song Length: </b>{time}</p>
+                    <button className="btn"><a href={props.data.songData.trackViewUrl}>View in iTunes</a></button>
+                    <form className="mt-4" action="/addToList" name={props.data.songData.trackId}>
+                        <button className="btn btn-primary" type="submit" aria-label="Close" name="name" value={props.data.songData.trackId}>Add to my list</button>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    );
 }
 
 const loadSongsFromServer = () => {
     sendAjax('GET','/getSongs',null,(data)=>{
         ReactDOM.render(
-            <DomoList domos={data.songs} />, document.querySelector("#content")
+            <SongListWindow domos={data.songs} />, document.querySelector("#content")
         );
     });
 };
@@ -158,14 +203,29 @@ const loadSongsFromServer = () => {
 const searchiTunes = (term) =>{
     sendAjax('GET','/searchTunes',term,(data)=>{
         ReactDOM.render(
-            <SearchList songs={data.songs} />, document.querySelector("#content")
+            <SearchListWindow songs={data.songs} />, document.querySelector("#content")
         );
     });
 };
 
+const getInfo = (e) => {
+    sendAjax('GET','/searchTunes',e.target.value,(data)=>{
+        sendAjax(
+            'GET',
+            `https://itunes.apple.com/search?term=${data.songs[0].trackName}+${data.songs[0].artistName}&entity=musicVideo`,
+            null,
+            (videoData)=>{
+            let propData = {songData: data.songs[0], videoData: videoData.results[0]}
+            ReactDOM.render(
+                <SongInfoWindow data={propData}  />, document.querySelector("#content")
+            );
+        });
+    });
+}
+
 const setup = function(csrf) {
     ReactDOM.render(
-        <DomoList domos={[]} />, document.querySelector("#content")
+        <SongListWindow domos={[]} />, document.querySelector("#content")
     );
 
     loadSongsFromServer();
@@ -177,12 +237,12 @@ const setup = function(csrf) {
     const shareButton = document.querySelector("#shareButton");
     const viewSongsButton = document.querySelector("#viewSongsButton");
     const searchForm = document.querySelector("#searchTunesForm");
-    const test = document.querySelector("#testButton");
+    const curatorButton = document.querySelector("#curatorButton");
 
 
-    test.addEventListener("click",(e) => {
+    curatorButton.addEventListener("click",(e) => {
         e.preventDefault();
-        
+
         console.log("addNewSong");
         return false;
     });
@@ -214,7 +274,7 @@ const setup = function(csrf) {
 
 const createSongForm = (csrf) => {
     ReactDOM.render(
-        <SongForm csrf={csrf} />, document.querySelector("#content")
+        <SongFormWindow csrf={csrf} />, document.querySelector("#content")
     );
 };
 const changePass = (csrf) => {
