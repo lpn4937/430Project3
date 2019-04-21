@@ -20,6 +20,7 @@ const requiresSecure = (req, res, next) => {
 };
 
 const requiresPremium = (req, res, next) =>{
+  console.log(req.session.account);
   if(!req.session.account.premium){
     return res.render('creditCard', {csrfToken: req.csrfToken});
   }

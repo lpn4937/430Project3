@@ -62,6 +62,7 @@ const signup = (request, response) => {
       username: req.body.username,
       salt,
       password: hash,
+      premium: false,
     };
 
     const newAccount = new Account.AccountModel(accountData);
@@ -95,27 +96,23 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+//make the account premium when the user "submits cc info"
 const makePremium = (req, res) => {
-  // console.log(Account);
-  Account.AccountSchema.statics.findByUsername(req.session.account.username, (err, doc) => {
-    if (err) {
-      return callback(err);
+
+  return Account.AccountModel.findOne({username: req.session.account.username}, (err, doc) => {
+    if(doc){
+      doc.premium = true;
+      req.session.account = Account.AccountModel.toAPI(doc);
+      doc.save((err) => {
+        if(err) console.log(err);
+      });
+      return res.redirect('/curator');
+      //res.json({ redirect: '/curator' });
     }
-    if (!doc) {
-      return callback();
+    else{
+      console.log(err);
     }
-    console.log(doc);
-    Account.AccountModel.update({premium: true}, doc, (err, raw) => {
-      if(err) {
-        res.send(err);
-      }
-      res.send(raw);
-    });
   });
-
-
-  //redirect the user to page they were going to with the same query they had
-  return false;
 }
 
 
