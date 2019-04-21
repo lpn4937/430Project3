@@ -20,8 +20,8 @@ const requiresSecure = (req, res, next) => {
 };
 
 const requiresPremium = (req, res, next) =>{
-  if(req.session.account.premium){
-    return res.redirect('/');
+  if(!req.session.account.premium){
+    return res.render('creditCard', {csrfToken: req.csrfToken});
   }
   
   return next();

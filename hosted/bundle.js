@@ -127,7 +127,7 @@ var SongListWindow = function SongListWindow(props) {
             React.createElement(
                 "h3",
                 { className: "emptyDomo" },
-                "No Domos yet"
+                "No songs yet"
             )
         );
     }
@@ -302,7 +302,7 @@ var SongInfoWindow = function SongInfoWindow(props) {
             { className: "searchList" },
             React.createElement(
                 "h3",
-                { className: "emptySong" },
+                { className: "emptySong m-5" },
                 "No results"
             )
         );
@@ -454,17 +454,9 @@ var setup = function setup(csrf) {
     //add code for nav buttons
     var addNewButton = document.querySelector("#addNewButton");
     var changePassButton = document.querySelector("#changePassButton");
-    var shareButton = document.querySelector("#shareButton");
     var viewSongsButton = document.querySelector("#viewSongsButton");
     var searchForm = document.querySelector("#searchTunesForm");
-    var curatorButton = document.querySelector("#curatorButton");
 
-    curatorButton.addEventListener("click", function (e) {
-        e.preventDefault();
-
-        console.log("addNewSong");
-        return false;
-    });
     addNewButton.addEventListener("click", function (e) {
         e.preventDefault();
         createSongForm(csrf);

@@ -15,9 +15,8 @@ const makerPage = (req, res) => {
   });
 };
 
-// render share page - profitable method; user must use credit card to use share
-const sharePage = (req, res) => {
-  res.render('share', { csrfToken: req.csrfToken() });
+const curator = (req, res) => {
+  res.render('curator');
 };
 
 // render page to add new songs to user list
@@ -168,6 +167,6 @@ module.exports.make = makeSong;
 module.exports.addNewPage = addNewPage;
 module.exports.deleteSong = deleteSong;
 module.exports.search = search;
-module.exports.sharePage = sharePage;
 module.exports.addToList = addToList;
 module.exports.getSongs = getSongs;
+module.exports.curator = curator;

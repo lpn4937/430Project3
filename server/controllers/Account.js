@@ -11,6 +11,10 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
+const notFound = (req, res) => {
+  res.render('404');
+}
+
 // render the password change page
 const changePasswordPage = (req, res) => {
   res.render('changePassword', { csrfToken: req.csrfToken() });
@@ -92,7 +96,24 @@ const getToken = (request, response) => {
 };
 
 const makePremium = (req, res) => {
-  req.session.account.premium = true;
+  // console.log(Account);
+  Account.AccountSchema.statics.findByUsername(req.session.account.username, (err, doc) => {
+    if (err) {
+      return callback(err);
+    }
+    if (!doc) {
+      return callback();
+    }
+    console.log(doc);
+    Account.AccountModel.update({premium: true}, doc, (err, raw) => {
+      if(err) {
+        res.send(err);
+      }
+      res.send(raw);
+    });
+  });
+
+
   //redirect the user to page they were going to with the same query they had
   return false;
 }
@@ -164,6 +185,9 @@ module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 
+module.exports.notFound = notFound;
+
 module.exports.changePassword = changePassword;
 module.exports.changePasswordPage = changePasswordPage;
 module.exports.deleteAccount = deleteAccount;
+module.exports.makePremium = makePremium;

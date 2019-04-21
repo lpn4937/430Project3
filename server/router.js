@@ -7,6 +7,7 @@ const router = (app) => {
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
+  app.post('/makePremium', mid.requiresLogin, controllers.Account.makePremium);
   app.get('/changePassword', mid.requiresSecure, mid.requiresLogin,
      controllers.Account.changePasswordPage);
   app.post('/changePassword', mid.requiresSecure, mid.requiresLogin,
@@ -26,10 +27,12 @@ const router = (app) => {
   // itunes
   app.get('/searchTunes', mid.requiresLogin, controllers.Song.search);
   app.get('/addNew', mid.requiresLogin, controllers.Song.addNewPage);
-  app.get('/share', mid.requiresLogin, mid.requiresSecure, controllers.Song.sharePage);
+  app.get('/curator', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.Song.curator);
   app.get('/addToList', mid.requiresLogin, mid.requiresSecure, controllers.Song.addToList);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
-  // app.get('*', controllers.Account.notFound, mid.requiresSecure);
+  
+  // 404
+  app.get('*', controllers.Account.notFound, mid.requiresSecure);
 };
 
 module.exports = router;

@@ -71,7 +71,7 @@ const SongListWindow = function(props) {
     if(props.domos.length === 0) {
         return (
             <div className="domoList">
-                <h3 className="emptyDomo">No Domos yet</h3>
+                <h3 className="emptyDomo">No songs yet</h3>
             </div>
         );
     }
@@ -152,7 +152,7 @@ const SongInfoWindow = function(props) {
     if(props.length === 0) {
         return (
             <div className="searchList">
-                <h3 className="emptySong">No results</h3>
+                <h3 className="emptySong m-5">No results</h3>
             </div>
         );
     }
@@ -234,18 +234,9 @@ const setup = function(csrf) {
     //add code for nav buttons
     const addNewButton = document.querySelector("#addNewButton");
     const changePassButton = document.querySelector("#changePassButton");
-    const shareButton = document.querySelector("#shareButton");
     const viewSongsButton = document.querySelector("#viewSongsButton");
     const searchForm = document.querySelector("#searchTunesForm");
-    const curatorButton = document.querySelector("#curatorButton");
 
-
-    curatorButton.addEventListener("click",(e) => {
-        e.preventDefault();
-
-        console.log("addNewSong");
-        return false;
-    });
     addNewButton.addEventListener("click",(e) => {
         e.preventDefault();
         createSongForm(csrf);
