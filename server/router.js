@@ -27,10 +27,13 @@ const router = (app) => {
   // itunes
   app.get('/searchTunes', mid.requiresLogin, controllers.Song.search);
   app.get('/addNew', mid.requiresLogin, controllers.Song.addNewPage);
-  app.get('/curator', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.Song.curator);
   app.get('/addToList', mid.requiresLogin, mid.requiresSecure, controllers.Song.addToList);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   
+  //shared
+  app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure,
+   mid.requiresPremium, controllers.SharedSong.getSharedSongs);
+
   // 404
   app.get('*', controllers.Account.notFound, mid.requiresSecure);
 };

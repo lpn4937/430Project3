@@ -15,10 +15,6 @@ const makerPage = (req, res) => {
   });
 };
 
-const curator = (req, res) => {
-  res.render('curator');
-};
-
 // render page to add new songs to user list
 const addNewPage = (req, res) => {
   Song.SongModel.findByOwner(req.session.account._id, (err, docs) => {
@@ -169,4 +165,3 @@ module.exports.deleteSong = deleteSong;
 module.exports.search = search;
 module.exports.addToList = addToList;
 module.exports.getSongs = getSongs;
-module.exports.curator = curator;
