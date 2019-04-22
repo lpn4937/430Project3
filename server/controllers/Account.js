@@ -28,7 +28,7 @@ const login = (request, response) => {
   const password = `${req.body.pass}`;
 
   if (!username || !password) {
-    return (res.status(400).json({ error: 'RAWR! All fields are required' }));
+    return (res.status(400).json({ error: 'All fields are required' }));
   }
   return Account.AccountModel.authenticate(username, password, (err, account) => {
     if (err || !account) {
@@ -98,7 +98,6 @@ const getToken = (request, response) => {
 
 //make the account premium when the user "submits cc info"
 const makePremium = (req, res) => {
-
   return Account.AccountModel.findOne({username: req.session.account.username}, (err, doc) => {
     if(doc){
       doc.premium = true;
@@ -171,7 +170,7 @@ const changePassword = (request, response) => {
             res.json(saveErr);
           });
 
-          return res.json({ redirect: '/maker' });
+          return res.redirect('/maker');
         });
       });
 };

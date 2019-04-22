@@ -10,6 +10,7 @@ const deleteSong = (req, res) => {
   res.redirect('/getSharedSongs');
 };
 
+//Get all the songs from the shared model
 const getSongs = (req, res) => SharedSong.SharedSongModel.findByOwner((err, docs) => {
   if (err) {
     console.log(err);

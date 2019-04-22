@@ -51,6 +51,7 @@ SharedSongSchema.statics.toAPI = (doc) => ({
   album: doc.album,
 });
 
+//get all the songs from that model
 SharedSongSchema.statics.findByOwner = (callback) => {
   // const search = {
   //   owner: convertId(ownerId),

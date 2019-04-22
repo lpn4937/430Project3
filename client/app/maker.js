@@ -15,6 +15,7 @@ const handleDomo = (e) => {
     return false;
 }
 
+//displays add new song list
 const SongFormWindow = (props) => {
     return (
         <section className="formFormat">
@@ -40,6 +41,7 @@ const SongFormWindow = (props) => {
     );
 };
 
+//displays change password form
 const ChangePassForm = (props) => {
     return (
         <section className="formFormat">
@@ -57,7 +59,7 @@ const ChangePassForm = (props) => {
                 <input className="form-control" id="pass2" type="password" name="pass2" placeholder="Retype Password"/>
             </div>
             <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit btn btn-primary" type="submit" value="Sign Up" />
+            <input className="formSubmit btn btn-primary" type="submit" value="Change Password" />
             <div id="errorMessage"></div>
 
             <a className="text-light nav-link active btn btn-danger mt-5" href="/deleteAccount">Delete Account</a>
@@ -66,39 +68,39 @@ const ChangePassForm = (props) => {
     );
 };
 
-
+//displays personal song list
 const SongListWindow = function(props) {
     if(props.domos.length === 0) {
         return (
-            <div className="domoList">
-                <h3 className="emptyDomo">No songs yet</h3>
+            <div className="songList">
+                <h3 className="emptySong">No songs yet</h3>
             </div>
         );
     }
 
-    const songNodes = props.domos.map(function(domo){
+    const songNodes = props.domos.map(function(song){
         return (
             <div className="col-lg-2 mt-3">
-                <div className="card"><img src={domo.art} alt="card image cap" className="card-img-top"/>
+                <div className="card"><img src={song.art} alt="card image cap" className="card-img-top"/>
                     <audio className="media" controls>
-                        <source src={domo.preview} type="audio/x-m4a"></source>
+                        <source src={song.preview} type="audio/x-m4a"></source>
                         Your browser does not support the audio element.
                     </audio>
                     <div className="card-body">
-                        <h5 className="songName">Name: </h5><p>{domo.name}</p>
-                        <h5 className="songArtist">Artist: </h5><p>{domo.artist}</p>
-                        <h5 className="songAlbum">Album: </h5><p>{domo.album}</p>
+                        <h5 className="songName">Name: </h5><p>{song.name}</p>
+                        <h5 className="songArtist">Artist: </h5><p>{song.artist}</p>
+                        <h5 className="songAlbum">Album: </h5><p>{song.album}</p>
                     </div>
-                    <form className="text-center" action="/addToSharedList" name={domo.name}>
-                        <input className="d-none" type="text" name="name" value={domo.name}></input>
-                        <input className="d-none" type="text" name="album" value={domo.album}></input>
-                        <input className="d-none" type="text" name="art" value={domo.art}></input>
-                        <input className="d-none" type="text" name="artist" value={domo.artist}></input>
-                        <input className="d-none" type="text" name="preview" value={domo.preview}></input>
-                        <button className="btn" type="submit" aria-label="Close" name="name" value={domo}>Share</button>
+                    <form className="text-center" action="/addToSharedList" name={song.name}>
+                        <input className="d-none" type="text" name="name" value={song.name}></input>
+                        <input className="d-none" type="text" name="album" value={song.album}></input>
+                        <input className="d-none" type="text" name="art" value={song.art}></input>
+                        <input className="d-none" type="text" name="artist" value={song.artist}></input>
+                        <input className="d-none" type="text" name="preview" value={song.preview}></input>
+                        <button className="btn" type="submit" aria-label="Close" name="name" value={song}>Share</button>
                     </form>
-                    <form className="close" action="/deleteSong" name={domo.name}>
-                        <button type="submit" className="close" aria-label="Close" name="name" value={domo.name}>
+                    <form className="close" action="/deleteSong" name={song.name}>
+                        <button type="submit" className="close" aria-label="Close" name="name" value={song.name}>
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </form>
@@ -108,12 +110,13 @@ const SongListWindow = function(props) {
     });
 
     return (
-        <div className="domoList row top-buffer m-3">
+        <div className="songList row top-buffer m-3">
             {songNodes}
         </div>
     );
 };
 
+//displays search results
 const SearchListWindow = function(props) {
     if(props.length === 0) {
         return (
@@ -155,6 +158,7 @@ const SearchListWindow = function(props) {
 
 };
 
+//displays more info from search results page
 const SongInfoWindow = function(props) {
     console.log(props);
     if(props.length === 0) {
@@ -200,6 +204,7 @@ const SongInfoWindow = function(props) {
     );
 }
 
+//loads songs from the user's personal list
 const loadSongsFromServer = () => {
     sendAjax('GET','/getSongs',null,(data)=>{
         ReactDOM.render(
@@ -208,6 +213,7 @@ const loadSongsFromServer = () => {
     });
 };
 
+//searches itunes for the given search term
 const searchiTunes = (term) =>{
     sendAjax('GET','/searchTunes',term,(data)=>{
         ReactDOM.render(
@@ -216,6 +222,7 @@ const searchiTunes = (term) =>{
     });
 };
 
+//searches itunes for more info
 const getInfo = (e) => {
     sendAjax('GET','/searchTunes',e.target.value,(data)=>{
         sendAjax(
@@ -231,6 +238,7 @@ const getInfo = (e) => {
     });
 }
 
+//sets up initial view and DOM
 const setup = function(csrf) {
     ReactDOM.render(
         <SongListWindow domos={[]} />, document.querySelector("#content")

@@ -32,7 +32,7 @@ const router = (app) => {
   
   //shared
   app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.SharedSong.getSharedSongs);
-  app.get('/addToSharedList', mid.requiresLogin, mid.requiresSecure, controllers.SharedSong.addToSharedList);
+  app.get('/addToSharedList', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.SharedSong.addToSharedList);
   app.get('/deleteSharedSong', mid.requiresLogin, mid.requiresSecure, controllers.SharedSong.deleteSharedSong);
 
 

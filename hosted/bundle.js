@@ -19,6 +19,7 @@ var handleDomo = function handleDomo(e) {
     return false;
 };
 
+//displays add new song list
 var SongFormWindow = function SongFormWindow(props) {
     var _React$createElement, _React$createElement2, _React$createElement3;
 
@@ -70,6 +71,7 @@ var SongFormWindow = function SongFormWindow(props) {
     );
 };
 
+//displays change password form
 var ChangePassForm = function ChangePassForm(props) {
     return React.createElement(
         "section",
@@ -108,7 +110,7 @@ var ChangePassForm = function ChangePassForm(props) {
                 React.createElement("input", { className: "form-control", id: "pass2", type: "password", name: "pass2", placeholder: "Retype Password" })
             ),
             React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-            React.createElement("input", { className: "formSubmit btn btn-primary", type: "submit", value: "Sign Up" }),
+            React.createElement("input", { className: "formSubmit btn btn-primary", type: "submit", value: "Change Password" }),
             React.createElement("div", { id: "errorMessage" }),
             React.createElement(
                 "a",
@@ -119,31 +121,32 @@ var ChangePassForm = function ChangePassForm(props) {
     );
 };
 
+//displays personal song list
 var SongListWindow = function SongListWindow(props) {
     if (props.domos.length === 0) {
         return React.createElement(
             "div",
-            { className: "domoList" },
+            { className: "songList" },
             React.createElement(
                 "h3",
-                { className: "emptyDomo" },
+                { className: "emptySong" },
                 "No songs yet"
             )
         );
     }
 
-    var songNodes = props.domos.map(function (domo) {
+    var songNodes = props.domos.map(function (song) {
         return React.createElement(
             "div",
             { className: "col-lg-2 mt-3" },
             React.createElement(
                 "div",
                 { className: "card" },
-                React.createElement("img", { src: domo.art, alt: "card image cap", className: "card-img-top" }),
+                React.createElement("img", { src: song.art, alt: "card image cap", className: "card-img-top" }),
                 React.createElement(
                     "audio",
                     { className: "media", controls: true },
-                    React.createElement("source", { src: domo.preview, type: "audio/x-m4a" }),
+                    React.createElement("source", { src: song.preview, type: "audio/x-m4a" }),
                     "Your browser does not support the audio element."
                 ),
                 React.createElement(
@@ -157,7 +160,7 @@ var SongListWindow = function SongListWindow(props) {
                     React.createElement(
                         "p",
                         null,
-                        domo.name
+                        song.name
                     ),
                     React.createElement(
                         "h5",
@@ -167,7 +170,7 @@ var SongListWindow = function SongListWindow(props) {
                     React.createElement(
                         "p",
                         null,
-                        domo.artist
+                        song.artist
                     ),
                     React.createElement(
                         "h5",
@@ -177,29 +180,29 @@ var SongListWindow = function SongListWindow(props) {
                     React.createElement(
                         "p",
                         null,
-                        domo.album
+                        song.album
                     )
                 ),
                 React.createElement(
                     "form",
-                    { className: "text-center", action: "/addToSharedList", name: domo.name },
-                    React.createElement("input", { className: "d-none", type: "text", name: "name", value: domo.name }),
-                    React.createElement("input", { className: "d-none", type: "text", name: "album", value: domo.album }),
-                    React.createElement("input", { className: "d-none", type: "text", name: "art", value: domo.art }),
-                    React.createElement("input", { className: "d-none", type: "text", name: "artist", value: domo.artist }),
-                    React.createElement("input", { className: "d-none", type: "text", name: "preview", value: domo.preview }),
+                    { className: "text-center", action: "/addToSharedList", name: song.name },
+                    React.createElement("input", { className: "d-none", type: "text", name: "name", value: song.name }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "album", value: song.album }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "art", value: song.art }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "artist", value: song.artist }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "preview", value: song.preview }),
                     React.createElement(
                         "button",
-                        { className: "btn", type: "submit", "aria-label": "Close", name: "name", value: domo },
+                        { className: "btn", type: "submit", "aria-label": "Close", name: "name", value: song },
                         "Share"
                     )
                 ),
                 React.createElement(
                     "form",
-                    { className: "close", action: "/deleteSong", name: domo.name },
+                    { className: "close", action: "/deleteSong", name: song.name },
                     React.createElement(
                         "button",
-                        { type: "submit", className: "close", "aria-label": "Close", name: "name", value: domo.name },
+                        { type: "submit", className: "close", "aria-label": "Close", name: "name", value: song.name },
                         React.createElement(
                             "span",
                             { "aria-hidden": "true" },
@@ -213,11 +216,12 @@ var SongListWindow = function SongListWindow(props) {
 
     return React.createElement(
         "div",
-        { className: "domoList row top-buffer m-3" },
+        { className: "songList row top-buffer m-3" },
         songNodes
     );
 };
 
+//displays search results
 var SearchListWindow = function SearchListWindow(props) {
     if (props.length === 0) {
         return React.createElement(
@@ -308,6 +312,7 @@ var SearchListWindow = function SearchListWindow(props) {
     );
 };
 
+//displays more info from search results page
 var SongInfoWindow = function SongInfoWindow(props) {
     console.log(props);
     if (props.length === 0) {
@@ -439,18 +444,21 @@ var SongInfoWindow = function SongInfoWindow(props) {
     );
 };
 
+//loads songs from the user's personal list
 var loadSongsFromServer = function loadSongsFromServer() {
     sendAjax('GET', '/getSongs', null, function (data) {
         ReactDOM.render(React.createElement(SongListWindow, { domos: data.songs }), document.querySelector("#content"));
     });
 };
 
+//searches itunes for the given search term
 var searchiTunes = function searchiTunes(term) {
     sendAjax('GET', '/searchTunes', term, function (data) {
         ReactDOM.render(React.createElement(SearchListWindow, { songs: data.songs }), document.querySelector("#content"));
     });
 };
 
+//searches itunes for more info
 var getInfo = function getInfo(e) {
     sendAjax('GET', '/searchTunes', e.target.value, function (data) {
         sendAjax('GET', "https://itunes.apple.com/search?term=" + data.songs[0].trackName + "+" + data.songs[0].artistName + "&entity=musicVideo", null, function (videoData) {
@@ -460,6 +468,7 @@ var getInfo = function getInfo(e) {
     });
 };
 
+//sets up initial view and DOM
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(SongListWindow, { domos: [] }), document.querySelector("#content"));
 

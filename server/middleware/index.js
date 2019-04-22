@@ -19,6 +19,7 @@ const requiresSecure = (req, res, next) => {
   return next();
 };
 
+//if the user's account isn't premium, redirect to cc page
 const requiresPremium = (req, res, next) =>{
   console.log(req.session.account);
   if(!req.session.account.premium){
