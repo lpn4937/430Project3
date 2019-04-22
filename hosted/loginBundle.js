@@ -1,5 +1,7 @@
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var handleLogin = function handleLogin(e) {
     e.preventDefault();
 
@@ -77,6 +79,8 @@ var LoginWindow = function LoginWindow(props) {
 };
 
 var SignupWindow = function SignupWindow(props) {
+    var _React$createElement;
+
     return React.createElement(
         "section",
         { className: "formFormat" },
@@ -87,7 +91,7 @@ var SignupWindow = function SignupWindow(props) {
         ),
         React.createElement(
             "form",
-            { id: "signupForm", name: "signupForm", onSubmit: handleSignup, action: "/signup", method: "POST", "class": "mainForm" },
+            (_React$createElement = { id: "signupForm", name: "signupForm", onSubmit: handleSignup }, _defineProperty(_React$createElement, "name", "signupForm"), _defineProperty(_React$createElement, "action", "/signup"), _defineProperty(_React$createElement, "method", "POST"), _defineProperty(_React$createElement, "class", "mainForm"), _React$createElement),
             React.createElement(
                 "div",
                 { className: "form-group" },

@@ -170,7 +170,7 @@ const changePassword = (request, response) => {
             res.json(saveErr);
           });
 
-          return res.redirect('/maker');
+          return res.json({ redirect: '/maker' });
         });
       });
 };

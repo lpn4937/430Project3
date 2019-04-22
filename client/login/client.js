@@ -60,7 +60,7 @@ const SignupWindow = (props) => {
     return (
         <section className="formFormat">
             <h2>Sign Up</h2>
-            <form id="signupForm" name="signupForm" onSubmit={handleSignup} action="/signup" method="POST" class="mainForm">
+            <form id="signupForm" name="signupForm" onSubmit={handleSignup} name="signupForm" action="/signup" method="POST" class="mainForm">
             <div className="form-group">
                 <label for="username">Username: </label>
                 <input className="form-control" id="user" type="text" name="username" placeholder="Username"/>

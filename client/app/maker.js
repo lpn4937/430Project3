@@ -4,13 +4,33 @@ const handleDomo = (e) => {
     $("#domoMessage").animate({width:'hide'},350);
     
     if($("#songName").val() == '' || $("#songArtist").val() == ''){
-        handleError("RAWR! All fields are required");
+        handleError("All fields are required");
         return false;
     }
 
-    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function() {
+    sendAjax('POST', $("#songForm").attr("action"), $("#songForm").serialize(), function() {
         loadSongsFromServer();
     });
+
+    return false;
+}
+
+const handleChangePass = (e) => {
+    e.preventDefault();
+
+    $("#domoMessage").animate({width:'hide'},350);
+
+    if($("#pass").val() !== $("#pass2").val()){
+        handleError("Passwords do not match");
+        return false;
+    }
+
+    if($("#current").val() == '' || $("#pass").val() == '' || $("#pass2").val() == ''){
+        handleError("All fields are required");
+        return false;
+    }
+
+    sendAjax('POST', $("#changePasswordForm").attr("action"),$("#changePasswordForm").serialize(), redirect);
 
     return false;
 }
@@ -45,7 +65,7 @@ const SongFormWindow = (props) => {
 const ChangePassForm = (props) => {
     return (
         <section className="formFormat">
-            <form className="form" id="changePasswordForm" name="changePasswordForm" action="/changePassword" method="POST" class="mainForm">
+            <form className="form" id="changePasswordForm" onSubmit={handleChangePass} name="changePasswordForm" action="/changePassword" method="POST" class="mainForm">
             <div className="form-group">
                 <label for="currentPass">Current Password: </label>
                 <input className="form-control" id="current" type="password" name="currentPass" placeholder="Current Password"/>
