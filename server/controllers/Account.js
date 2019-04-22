@@ -160,15 +160,19 @@ const changePassword = (request, response) => {
           newAccount.password = hash;
           newAccount.salt = salt;
 
-          const savePromise = newAccount.save();
+          newAccount.save();
+          // const savePromise = newAccount.save();
 
-          savePromise.then(() => res.json({
-            password: newAccount.password,
-          }));
+          // savePromise.then(() => res.json({
+          //   password: newAccount.password,
+          // }));
+          // savePromise.then(() => res.json({
+          //   redirect: '/maker',
+          // }));
 
-          savePromise.catch((saveErr) => {
-            res.json(saveErr);
-          });
+          // savePromise.catch((saveErr) => {
+          //   res.json(saveErr);
+          // });
 
           return res.json({ redirect: '/maker' });
         });
