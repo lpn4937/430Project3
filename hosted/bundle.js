@@ -182,6 +182,20 @@ var SongListWindow = function SongListWindow(props) {
                 ),
                 React.createElement(
                     "form",
+                    { className: "text-center", action: "/addToSharedList", name: domo.name },
+                    React.createElement("input", { className: "d-none", type: "text", name: "name", value: domo.name }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "album", value: domo.album }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "art", value: domo.art }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "artist", value: domo.artist }),
+                    React.createElement("input", { className: "d-none", type: "text", name: "preview", value: domo.preview }),
+                    React.createElement(
+                        "button",
+                        { className: "btn", type: "submit", "aria-label": "Close", name: "name", value: domo },
+                        "Share"
+                    )
+                ),
+                React.createElement(
+                    "form",
                     { className: "close", action: "/deleteSong", name: domo.name },
                     React.createElement(
                         "button",

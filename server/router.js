@@ -31,8 +31,10 @@ const router = (app) => {
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   
   //shared
-  app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure,
-   mid.requiresPremium, controllers.SharedSong.getSharedSongs);
+  app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.SharedSong.getSharedSongs);
+  app.get('/addToSharedList', mid.requiresLogin, mid.requiresSecure, controllers.SharedSong.addToSharedList);
+  app.get('/deleteSharedSong', mid.requiresLogin, mid.requiresSecure, controllers.SharedSong.deleteSharedSong);
+
 
   // 404
   app.get('*', controllers.Account.notFound, mid.requiresSecure);

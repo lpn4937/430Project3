@@ -51,7 +51,7 @@ SharedSongSchema.statics.toAPI = (doc) => ({
   album: doc.album,
 });
 
-SharedSongSchema.statics.findByOwner = (ownerId, callback) => {
+SharedSongSchema.statics.findByOwner = (callback) => {
   // const search = {
   //   owner: convertId(ownerId),
   // };

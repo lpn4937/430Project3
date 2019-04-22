@@ -106,7 +106,7 @@ const makePremium = (req, res) => {
       doc.save((err) => {
         if(err) console.log(err);
       });
-      return res.redirect('/curator');
+      return res.redirect('/getSharedSongs');
       //res.json({ redirect: '/curator' });
     }
     else{

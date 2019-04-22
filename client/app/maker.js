@@ -89,6 +89,14 @@ const SongListWindow = function(props) {
                         <h5 className="songArtist">Artist: </h5><p>{domo.artist}</p>
                         <h5 className="songAlbum">Album: </h5><p>{domo.album}</p>
                     </div>
+                    <form className="text-center" action="/addToSharedList" name={domo.name}>
+                        <input className="d-none" type="text" name="name" value={domo.name}></input>
+                        <input className="d-none" type="text" name="album" value={domo.album}></input>
+                        <input className="d-none" type="text" name="art" value={domo.art}></input>
+                        <input className="d-none" type="text" name="artist" value={domo.artist}></input>
+                        <input className="d-none" type="text" name="preview" value={domo.preview}></input>
+                        <button className="btn" type="submit" aria-label="Close" name="name" value={domo}>Share</button>
+                    </form>
                     <form className="close" action="/deleteSong" name={domo.name}>
                         <button type="submit" className="close" aria-label="Close" name="name" value={domo.name}>
                         <span aria-hidden="true">&times;</span>
