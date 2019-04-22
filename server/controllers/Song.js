@@ -88,7 +88,7 @@ const makeSong = (req, res) => {
 
     newSong.save();
 
-    return res.redirect('/maker');
+    return res.json({redirect: 'maker'});
   }).catch(err => {
     console.log(err);
     if (err.code === 11000) {

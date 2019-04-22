@@ -35,12 +35,27 @@ const handleChangePass = (e) => {
     return false;
 }
 
+const handleAddSong = (e) => {
+    e.preventDefault();
+
+    $("#domoMessage").animate({width:'hide'},350);
+
+    if($("#songName").val() == ''){
+        handleError("Song name is required");
+        return false;
+    }
+
+    sendAjax('POST', $("#songForm").attr("action"),$("#songForm").serialize(), redirect);
+
+    return false;
+}
+
 //displays add new song list
 const SongFormWindow = (props) => {
     return (
         <section className="formFormat">
             <h2>Add a song</h2>
-            <form id="songForm" name="songForm" action="/maker" method="POST" class="pageForm">
+            <form id="songForm" onSubmit={handleAddSong} name="songForm" action="/maker" method="POST" class="pageForm">
             <div className="form-group">
             <label for="name">Name: </label>
             <input id="songName" className="form-control" id="songName" type="text" name="name" placeholder="Song Name"/>

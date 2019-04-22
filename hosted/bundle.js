@@ -39,6 +39,21 @@ var handleChangePass = function handleChangePass(e) {
     return false;
 };
 
+var handleAddSong = function handleAddSong(e) {
+    e.preventDefault();
+
+    $("#domoMessage").animate({ width: 'hide' }, 350);
+
+    if ($("#songName").val() == '') {
+        handleError("Song name is required");
+        return false;
+    }
+
+    sendAjax('POST', $("#songForm").attr("action"), $("#songForm").serialize(), redirect);
+
+    return false;
+};
+
 //displays add new song list
 var SongFormWindow = function SongFormWindow(props) {
     var _React$createElement, _React$createElement2, _React$createElement3;
@@ -53,7 +68,7 @@ var SongFormWindow = function SongFormWindow(props) {
         ),
         React.createElement(
             "form",
-            { id: "songForm", name: "songForm", action: "/maker", method: "POST", "class": "pageForm" },
+            { id: "songForm", onSubmit: handleAddSong, name: "songForm", action: "/maker", method: "POST", "class": "pageForm" },
             React.createElement(
                 "div",
                 { className: "form-group" },
