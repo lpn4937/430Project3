@@ -101,14 +101,12 @@ const setup = (csrf) => {
     signupButton.addEventListener("click",(e) => {
         e.preventDefault();
         createSignupWindow(csrf);
-        console.log("signup");
         return false;
     });
 
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
         createLoginWindow(csrf);
-        console.log("login");
         return false;
     });
 

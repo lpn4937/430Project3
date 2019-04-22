@@ -13,7 +13,7 @@ const logout = (req, res) => {
 
 const notFound = (req, res) => {
   res.render('404');
-}
+};
 
 // render the password change page
 const changePasswordPage = (req, res) => {
@@ -96,23 +96,21 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
-//make the account premium when the user "submits cc info"
-const makePremium = (req, res) => {
-  return Account.AccountModel.findOne({username: req.session.account.username}, (err, doc) => {
-    if(doc){
-      doc.premium = true;
-      req.session.account = Account.AccountModel.toAPI(doc);
-      doc.save((err) => {
-        if(err) console.log(err);
-      });
-      return res.redirect('/getSharedSongs');
-      //res.json({ redirect: '/curator' });
-    }
-    else{
-      console.log(err);
-    }
-  });
-}
+// make the account premium when the user "submits cc info"
+const makePremium = (request, res) => Account.AccountModel.findOne(
+    { username: request.session.account.username }, (err, account) => {
+      const req = request;
+      if (account) {
+        const newAccount = account;
+        newAccount.premium = true;
+        newAccount.save((error) => {
+          if (error) console.log(error);
+        });
+        req.session.account = Account.AccountModel.toAPI(newAccount);
+      }
+
+      return res.redirect('/sharePage');
+    });
 
 
 // delete the user account and redirect them to root

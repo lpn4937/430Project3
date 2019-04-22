@@ -180,7 +180,6 @@ const SearchListWindow = function(props) {
 
 //displays more info from search results page
 const SongInfoWindow = function(props) {
-    console.log(props);
     if(props.length === 0) {
         return (
             <div className="searchList">
@@ -276,25 +275,21 @@ const setup = function(csrf) {
     addNewButton.addEventListener("click",(e) => {
         e.preventDefault();
         createSongForm(csrf);
-        console.log("addNewSong");
         return false;
     });
     changePassButton.addEventListener("click",(e) => {
         e.preventDefault();
         changePass(csrf);
-        console.log("changePass");
         return false;
     });
     viewSongsButton.addEventListener("click",(e) => {
         e.preventDefault();
         loadSongsFromServer();
-        console.log("viewSongs");
         return false;
     });
     searchForm.addEventListener("submit",(e) => {
         e.preventDefault();
         searchiTunes(e.target[0].value);
-        console.log("searchiTunes");
         return false;
     });
 };

@@ -51,14 +51,13 @@ SharedSongSchema.statics.toAPI = (doc) => ({
   album: doc.album,
 });
 
-//get all the songs from that model
-SharedSongSchema.statics.findByOwner = (callback) => {
+// get all the songs from that model
+SharedSongSchema.statics.findByOwner = (callback) =>
   // const search = {
   //   owner: convertId(ownerId),
   // };
 
-  return SharedSongModel.find().select('name artist album art preview').exec(callback);
-};
+   SharedSongModel.find().select('name artist album art preview').exec(callback);
 
 SharedSongModel = mongoose.model('SharedSong', SharedSongSchema);
 

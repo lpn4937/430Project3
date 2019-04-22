@@ -15,41 +15,10 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary"><a href="/login"></a>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a id="loginButton" class="text-light nav-link active" href="/">Return</a></li>
+      <li class="nav-item"><a id="returnButton" class="text-light nav-link active" href="/">Return</a></li>
     </ul>
   </nav>
-  <section id="songs">
-    <div class="row top-buffer m-3">
-      {{#if songs}}
-        {{#each songs}}
-          <div class="col-lg-2">
-            <div class="card"><img src="{{this.art}}" alt="card image cap" class="card-img-top"/>
-              <audio class="media" controls>
-                <source src="{{this.preview}}" type="audio/x-m4a">
-                Your browser does not support the audio element.
-              </audio>
-              <div class="card-body">
-                <h5 class="songName">Name: </h5><p>{{this.name}}</p>
-                <h5 class="songArtist">Artist: </h5><p>{{this.artist}}</p>
-                <h5 class="songAlbum">Album: </h5><p>{{this.album}}</p>
-              </div>
-              <form class="close" action="/deleteSharedSong" name="{{this.name}}">
-                <button type="submit" class="close" aria-label="Close" name="name" value="{{this.name}}">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </form>
-            </div>
-          </div>
-        {{/each}}
-      {{else}}
-        <div class="row">
-          <div class="col-lg-12">
-            <h3 class="emptySong">No Songs yet</h3>
-          </div>
-        </div>
-      {{/if}}
-    </div>
-  </section>
-  <script src="/assets/loginBundle.js"></script>
+  <section id="content"></section>
+  <script src="/assets/shareBundle.js"></script>
 </body>
 </html>

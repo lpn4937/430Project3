@@ -14,7 +14,7 @@ const router = (app) => {
      controllers.Account.changePassword);
   app.get('/deleteAccount', mid.requiresSecure, mid.requiresLogin,
      controllers.Account.deleteAccount);
-  
+
 
   // songs
   app.get('/maker', mid.requiresLogin, controllers.Song.makerPage);
@@ -29,11 +29,16 @@ const router = (app) => {
   app.get('/addNew', mid.requiresLogin, controllers.Song.addNewPage);
   app.get('/addToList', mid.requiresLogin, mid.requiresSecure, controllers.Song.addToList);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
-  
-  //shared
-  app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.SharedSong.getSharedSongs);
-  app.get('/addToSharedList', mid.requiresLogin, mid.requiresSecure, mid.requiresPremium, controllers.SharedSong.addToSharedList);
-  app.get('/deleteSharedSong', mid.requiresLogin, mid.requiresSecure, controllers.SharedSong.deleteSharedSong);
+
+  // shared
+  app.get('/sharePage', mid.requiresLogin, mid.requiresPremium,
+   controllers.SharedSong.sharePage);
+  app.get('/getSharedSongs', mid.requiresLogin, mid.requiresSecure,
+   mid.requiresPremium, controllers.SharedSong.getSharedSongs);
+  app.get('/addToSharedList', mid.requiresLogin, mid.requiresSecure,
+   mid.requiresPremium, controllers.SharedSong.addToSharedList);
+  app.get('/deleteSharedSong', mid.requiresLogin, mid.requiresSecure,
+   controllers.SharedSong.deleteSharedSong);
 
 
   // 404

@@ -143,14 +143,12 @@ var setup = function setup(csrf) {
     signupButton.addEventListener("click", function (e) {
         e.preventDefault();
         createSignupWindow(csrf);
-        console.log("signup");
         return false;
     });
 
     loginButton.addEventListener("click", function (e) {
         e.preventDefault();
         createLoginWindow(csrf);
-        console.log("login");
         return false;
     });
 
@@ -187,6 +185,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
         dataType: "json",
         success: success,
         error: function error(xhr, status, _error) {
+            console.log(xhr.responseText);
             var messageObj = JSON.parse(xhr.responseText);
             handleError(messageObj.error);
         }

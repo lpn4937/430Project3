@@ -19,15 +19,15 @@ const requiresSecure = (req, res, next) => {
   return next();
 };
 
-//if the user's account isn't premium, redirect to cc page
-const requiresPremium = (req, res, next) =>{
+// if the user's account isn't premium, redirect to cc page
+const requiresPremium = (req, res, next) => {
   console.log(req.session.account);
-  if(!req.session.account.premium){
-    return res.render('creditCard', {csrfToken: req.csrfToken});
+  if (!req.session.account.premium) {
+    return res.render('creditCard', { csrfToken: req.csrfToken });
   }
-  
+
   return next();
-}
+};
 
 const bypassSecure = (req, res, next) => {
   next();

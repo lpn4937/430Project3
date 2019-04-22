@@ -130,7 +130,7 @@ const addToList = (req, res) => {
 
 // search itunes from search bar
 const search = (req, res) => {
-  let term = Object.keys(req.query)[0];
+  const term = Object.keys(req.query)[0];
   const url = `https://itunes.apple.com/search?term=${term}`;
 
   getTunes(url).then(result => {
@@ -142,8 +142,8 @@ const search = (req, res) => {
       }
     }
 
-    //res.render('search', { csrfToken: req.csrfToken(), songs: results });
-    return res.json({songs:results});
+    // res.render('search', { csrfToken: req.csrfToken(), songs: results });
+    return res.json({ songs: results });
   }).catch(err => {
     console.log(err);
   });

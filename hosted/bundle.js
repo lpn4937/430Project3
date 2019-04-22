@@ -334,7 +334,6 @@ var SearchListWindow = function SearchListWindow(props) {
 
 //displays more info from search results page
 var SongInfoWindow = function SongInfoWindow(props) {
-    console.log(props);
     if (props.length === 0) {
         return React.createElement(
             "div",
@@ -503,25 +502,21 @@ var setup = function setup(csrf) {
     addNewButton.addEventListener("click", function (e) {
         e.preventDefault();
         createSongForm(csrf);
-        console.log("addNewSong");
         return false;
     });
     changePassButton.addEventListener("click", function (e) {
         e.preventDefault();
         changePass(csrf);
-        console.log("changePass");
         return false;
     });
     viewSongsButton.addEventListener("click", function (e) {
         e.preventDefault();
         loadSongsFromServer();
-        console.log("viewSongs");
         return false;
     });
     searchForm.addEventListener("submit", function (e) {
         e.preventDefault();
         searchiTunes(e.target[0].value);
-        console.log("searchiTunes");
         return false;
     });
 };
@@ -563,6 +558,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
         dataType: "json",
         success: success,
         error: function error(xhr, status, _error) {
+            console.log(xhr.responseText);
             var messageObj = JSON.parse(xhr.responseText);
             handleError(messageObj.error);
         }
